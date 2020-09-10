@@ -1,0 +1,10 @@
+site_name: 小木个人笔记
+site_description: '记录生活、技术，点点滴滴'
+site_author: '小木'
+docs_dir: docs/
+repo_name: 'shengleiRain/shengleiRain.io'
+repo_url: 'https://github.com/shengleiRain/shengleiRain.io'
+nav:
+    - Home: index.md
+theme:
+  name: 'material'
