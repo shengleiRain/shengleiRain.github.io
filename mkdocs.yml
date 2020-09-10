@@ -64,4 +64,28 @@ google_analytics:
 
 nav:
     - Home: index.md
+    - Android: 
+      - android/2020-06-04-material design.md
+      - Kotlin:
+        - android/kotlin/2020-03-11-标准函数总结.markdown
+        - android/kotlin/2020-03-13-Kotlin协程（一）.md
+        - android/kotlin/2020-03-13-Kotlin协程（二）.md
+        - android/kotlin/2020-03-15-Kotlin协程（三）.md
+    - Git:
+      - git/2020-03-16-Git命令.md
+      - git/2020-04-10-git branch, git checkout and git merge.md
+      - git/2020-04-10-git pull vs git fetch.md
+      - git/2020-04-10-Git重写历史.md
+    - Network:
+      - HTTP:
+        - network/http/2020-04-16-HTTP协议总述.md
+        - network/http/2020-08-03-详解HTTP.md
+        - network/http/2020-08-03-URL、URN和URI.md
+    - Others:
+      - others/2020-03-12-gradle-aliyun-代理.md
+      - others/2020-03-14-Android项目的gradle依赖路径记录.md
+      - others/2020-04-06-SSH.md
+      - others/2020-04-08-Vi.md
+      - others/2020-04-11-加盐密码哈希.md
+      - others/2020-06-06-flask+uwsgi后台搭建.md
 
