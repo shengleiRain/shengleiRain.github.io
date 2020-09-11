@@ -2,13 +2,13 @@ site_name: 小木个人笔记
 site_description: '记录生活、技术，点点滴滴'
 site_author: '小木'
 docs_dir: docs/
-#repo_name: 'shengleiRain/shengleiRain.io'
-#repo_url: 'https://github.com/shengleiRain/shengleiRain.io'
+repo_name: 'shengleiRain/shengleiRain.io'
+repo_url: 'https://github.com/shengleiRain/shengleiRain.github.io'
 edit_uri: ""
 
 copyright: '&copy; 2020 小木'
 theme:
-  name: 'material'
+  name: material
   static_templates:
     - 404.html
   palette:
@@ -26,10 +26,18 @@ theme:
 plugins:
   - search
 
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/shengleiRain
+  disqus: 'slblog'
+  # manifest: manifest.webmanifest
+
 markdown_extensions:
   - admonition
   - codehilite:
       guess_lang: false
+      linenums: false
   - def_list
   - footnotes
   - meta
@@ -58,6 +66,9 @@ markdown_extensions:
   - pymdownx.tilde
 
 extra_javascript:
+  - '//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js'
+  - 'js/baidu-tongji.js'
+  - 'js/extras.js'
   - 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML'
 
 google_analytics:

@@ -1,3 +1,2 @@
-# Example MkDocs deploy GitHub Action
+# 小木的学习笔记
 
-This is a template that uses the  [MkDocs deploy](https://github.com/marketplace/actions/deploy-mkdocs) GitHub action.
