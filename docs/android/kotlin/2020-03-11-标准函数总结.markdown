@@ -149,7 +149,7 @@ public inline fun <T> T.apply(block: T.() -> Unit): T {
 
 ## 使用选择
 
-![img](/img/in-post/kotlin/标准函数使用选择.png)
+![img](../../assets/images/android/kotlin/%E6%A0%87%E5%87%86%E5%87%BD%E6%95%B0%E4%BD%BF%E7%94%A8%E9%80%89%E6%8B%A9.png)
 
 
 

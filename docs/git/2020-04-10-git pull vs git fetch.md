@@ -36,9 +36,9 @@ tags:
 
 ### 一个示例
 
-| 假定远程仓库和本地仓库的版本关系是如下图：<br>![img](/img/in-post/git/bubble diagram-01.svg) |
+| 假定远程仓库和本地仓库的版本关系是如下图：<br>![img](../assets/images/git/bubble diagram-01.svg) |
 | ------------------------------------------------------------ |
-| - git pull后会创建一个merge版本<br>![img](/img/in-post/git/bubble diagram-02.svg) |
-| - 使用git pull --rebase后，[git rebase]({%post_url 2020-04-10-Git重写历史%}#git-rebase-更改更老的提交历史或者多个提交历史)<br>可以通过配置`git config --global branch.autosetuprebase always`让`git rebase`替代`git merge`<br>![img](/img/in-post/git/bubble diagram-03.svg) |
-| - git pull --verbose<br>会显示具体的merge信息。![截屏2020-04-10下午5.22.22](/img/in-post/git/截屏2020-04-10下午5.22.22.png) |
+| - git pull后会创建一个merge版本<br>![img](../assets/images/git/bubble diagram-02.svg) |
+| - 使用git pull --rebase后，[git rebase]({%post_url 2020-04-10-Git重写历史%}#git-rebase-更改更老的提交历史或者多个提交历史)<br>可以通过配置`git config --global branch.autosetuprebase always`让`git rebase`替代`git merge`<br>![img](../assets/images/git/bubble diagram-03.svg) |
+| - git pull --verbose<br>会显示具体的merge信息。![截屏2020-04-10下午5.22.22](../assets/images/git/截屏2020-04-10下午5.22.22.png) |
 
