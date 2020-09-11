@@ -20,6 +20,8 @@ theme:
   language: 'zh'
   feature:
     tabs: true
+  logo: assets/images/favicon.ico
+  favicon: assets/images/favicon.ico
 
 plugins:
   - search
