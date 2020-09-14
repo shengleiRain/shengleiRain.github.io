@@ -84,6 +84,17 @@ nav:
         - android/kotlin/2020-03-13-Kotlin协程（一）.md
         - android/kotlin/2020-03-13-Kotlin协程（二）.md
         - android/kotlin/2020-03-15-Kotlin协程（三）.md
+      - Jetpack:
+        - android/jetpack/index.md
+      - Framework系列:
+        - android/framework/index.md
+      - 三方库源码解析系列:
+        - Glide:
+          - android/third-party/glide/index.md
+        - Volley:
+          - android/third-party/volley/index.md
+        - Eventbus:
+          - android/third-party/eventbus/index.md
     - Git:
       - git/2020-03-16-Git命令.md
       - git/2020-04-10-git branch, git checkout and git merge.md
@@ -95,6 +106,8 @@ nav:
         - network/http/2020-08-03-详解HTTP.md
         - network/http/2020-08-03-URL、URN和URI.md
     - Others:
+      - Mkdocs:
+        - others/mkdocs/mkdocs使用指南.md
       - others/2020-03-12-gradle-aliyun-代理.md
       - others/2020-03-14-Android项目的gradle依赖路径记录.md
       - others/2020-04-06-SSH.md
