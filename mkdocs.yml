@@ -79,6 +79,8 @@ nav:
     - Home: index.md
     - Android: 
       - android/2020-06-04-material design.md
+      - Android Studio:
+        - android/Android studio/2020-09-14-debug技巧.md
       - Kotlin:
         - android/kotlin/2020-03-11-标准函数总结.markdown
         - android/kotlin/2020-03-13-Kotlin协程（一）.md
