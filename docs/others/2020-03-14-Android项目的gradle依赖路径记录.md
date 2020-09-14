@@ -14,13 +14,6 @@ tags:
 
 ---
 
-# Contents
-
-{:.no_toc}
-
-* A markdown unordered list which will be replaced with the ToC, excluding the "Contents" from above
-{:toc}
-
 
 为了在添加依赖的时候，不再到处查找，所以用一个文档来记录下依赖的配置路径。持续更新～
 

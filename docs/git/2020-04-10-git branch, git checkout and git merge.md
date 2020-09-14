@@ -13,13 +13,6 @@ tags:
 
 ---
 
-# Contents
-
-{:.no_toc}
-
-* A markdown unordered list which will be replaced with the ToC, excluding the "Contents" from above
-{:toc}
-
 
 ## git branch
 

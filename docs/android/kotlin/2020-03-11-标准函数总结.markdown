@@ -9,12 +9,6 @@ tags:
     - Kotlin
 
 ---
-
-# Contents
-{:.no_toc}
-
-* A markdown unordered list which will be replaced with the ToC, excluding the "Contents" from above
-{:toc}
 ## 概述
 
 Kotlin中标准函数使用最多的包括：run, with, T.run, T.let, T.also, T.apply, 根据其特点，可以按照一下三类进行对比。

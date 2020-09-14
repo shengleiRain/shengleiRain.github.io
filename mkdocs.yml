@@ -30,7 +30,7 @@ extra:
   social:
     - icon: fontawesome/brands/github
       link: https://github.com/shengleiRain
-  disqus: 'slblog'
+  # disqus: 'slblog'
   # manifest: manifest.webmanifest
 
 markdown_extensions:

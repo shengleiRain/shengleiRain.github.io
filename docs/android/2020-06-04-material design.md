@@ -11,14 +11,6 @@ tags:
 
 ---
 
-# Contents
-
-{:.no_toc}
-
-* A markdown unordered list which will be replaced with the ToC, excluding the "Contents" from above
-{:toc}
-
-
 ## 什么是Material Design
 
 这是谷歌提出的一套集合视觉、交互和前端的界面设计规范，其目标有两点，一是用视觉形式囊括经典的设计原则，并将将前沿创新和技术展现出来，二是以移动端为基础，将所有尺寸、类型的设备统一起来。设计文档本身，就提供了一种很好的方式，帮你从各个角度思考和构建自己产品的规范。
