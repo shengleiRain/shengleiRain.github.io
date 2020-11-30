@@ -110,6 +110,8 @@ nav:
     - Others:
       - Mkdocs:
         - others/mkdocs/2020-09-14-mkdocs使用指南.md
+      - bug记录:
+        - others/bug records/2020-11-30.md
       - others/2020-09-14-UML.md
       - others/2020-03-12-gradle-aliyun-代理.md
       - others/2020-03-14-Android项目的gradle依赖路径记录.md
