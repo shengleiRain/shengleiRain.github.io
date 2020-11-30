@@ -1,0 +1,1523 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="记录生活、技术，点点滴滴">
+      
+      
+      
+      
+        <meta name="author" content="Rain">
+      
+      <link rel="shortcut icon" href="../../assets/images/favicon.ico">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-6.1.6">
+    
+    
+      
+        <title>加盐密码哈希 - 小木个人笔记</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.6910b76c.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.196e0c26.min.css">
+        
+          
+          
+          <meta name="theme-color" content="#ffffff">
+        
+      
+    
+    
+    
+      
+        
+        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>body,input{font-family:"Roboto",-apple-system,BlinkMacSystemFont,Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono",SFMono-Regular,Consolas,Menlo,monospace}</style>
+      
+    
+    
+    
+    
+      
+        
+<script>window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)},ga.l=+new Date,ga("create","UA-155096376-1","auto"),ga("set","anonymizeIp",!0),ga("send","pageview"),document.addEventListener("DOMContentLoaded",function(){document.forms.search&&document.forms.search.query.addEventListener("blur",function(){if(this.value){var e=document.location.pathname;ga("send","pageview",e+"?q="+this.value)}})}),document.addEventListener("DOMContentSwitch",function(){ga("send","pageview",document.location.pathname)})</script>
+<script async src="https://www.google-analytics.com/analytics.js"></script>
+      
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="white" data-md-color-accent="blue">
+      
+  
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#_1" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid" aria-label="Header">
+    <a href="../.." title="小木个人笔记" class="md-header-nav__button md-logo" aria-label="小木个人笔记">
+      
+  <img src="../../assets/images/favicon.ico" alt="logo">
+
+    </a>
+    <label class="md-header-nav__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header-nav__title" data-md-component="header-title">
+      
+        <div class="md-header-nav__ellipsis">
+          <span class="md-header-nav__topic md-ellipsis">
+            小木个人笔记
+          </span>
+          <span class="md-header-nav__topic md-ellipsis">
+            
+              加盐密码哈希
+            
+          </span>
+        </div>
+      
+    </div>
+    
+      <label class="md-header-nav__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <button type="reset" class="md-search__icon md-icon" aria-label="Clear" data-md-component="search-reset" tabindex="-1">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header-nav__source">
+        
+<a href="https://github.com/shengleiRain/shengleiRain.github.io" title="前往 GitHub 仓库" class="md-source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05L244 40.45a28.87 28.87 0 00-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 01-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 000 40.81l195.61 195.6a28.86 28.86 0 0040.8 0l194.69-194.69a28.86 28.86 0 000-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    shengleiRain/shengleiRain.io
+  </div>
+</a>
+      </div>
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="小木个人笔记" class="md-nav__button md-logo" aria-label="小木个人笔记">
+      
+  <img src="../../assets/images/favicon.ico" alt="logo">
+
+    </a>
+    小木个人笔记
+  </label>
+  
+    <div class="md-nav__source">
+      
+<a href="https://github.com/shengleiRain/shengleiRain.github.io" title="前往 GitHub 仓库" class="md-source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05L244 40.45a28.87 28.87 0 00-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 01-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 000 40.81l195.61 195.6a28.86 28.86 0 0040.8 0l194.69-194.69a28.86 28.86 0 000-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    shengleiRain/shengleiRain.io
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../.." class="md-nav__link">
+      Home
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2" >
+    <label class="md-nav__link" for="nav-2">
+      Android
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="Android" data-md-level="1">
+      <label class="md-nav__title" for="nav-2">
+        <span class="md-nav__icon md-icon"></span>
+        Android
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../android/2020-06-04-material%20design/" class="md-nav__link">
+      material design概述
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="nav-2-2" type="checkbox" id="nav-2-2" >
+    <label class="md-nav__link" for="nav-2-2">
+      Android Studio
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="Android Studio" data-md-level="2">
+      <label class="md-nav__title" for="nav-2-2">
+        <span class="md-nav__icon md-icon"></span>
+        Android Studio
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../android/Android%20studio/2020-09-14-debug%E6%8A%80%E5%B7%A7/" class="md-nav__link">
+      debug技巧
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="nav-2-3" type="checkbox" id="nav-2-3" >
+    <label class="md-nav__link" for="nav-2-3">
+      Kotlin
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="Kotlin" data-md-level="2">
+      <label class="md-nav__title" for="nav-2-3">
+        <span class="md-nav__icon md-icon"></span>
+        Kotlin
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../android/kotlin/2020-03-11-%E6%A0%87%E5%87%86%E5%87%BD%E6%95%B0%E6%80%BB%E7%BB%93/" class="md-nav__link">
+      Kotlin 标准函数总结
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../android/kotlin/2020-03-13-Kotlin%E5%8D%8F%E7%A8%8B%EF%BC%88%E4%B8%80%EF%BC%89/" class="md-nav__link">
+      Kotlin协程（一）
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../android/kotlin/2020-03-13-Kotlin%E5%8D%8F%E7%A8%8B%EF%BC%88%E4%BA%8C%EF%BC%89/" class="md-nav__link">
+      Kotlin协程（二）
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../android/kotlin/2020-03-15-Kotlin%E5%8D%8F%E7%A8%8B%EF%BC%88%E4%B8%89%EF%BC%89/" class="md-nav__link">
+      Kotlin协程（三）
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="nav-2-4" type="checkbox" id="nav-2-4" >
+    <label class="md-nav__link" for="nav-2-4">
+      Jetpack
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="Jetpack" data-md-level="2">
+      <label class="md-nav__title" for="nav-2-4">
+        <span class="md-nav__icon md-icon"></span>
+        Jetpack
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../android/jetpack/" class="md-nav__link">
+      Navigation
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="nav-2-5" type="checkbox" id="nav-2-5" >
+    <label class="md-nav__link" for="nav-2-5">
+      Framework系列
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="Framework系列" data-md-level="2">
+      <label class="md-nav__title" for="nav-2-5">
+        <span class="md-nav__icon md-icon"></span>
+        Framework系列
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../android/framework/" class="md-nav__link">
+      Framework系列导航
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="nav-2-6" type="checkbox" id="nav-2-6" >
+    <label class="md-nav__link" for="nav-2-6">
+      三方库源码解析系列
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="三方库源码解析系列" data-md-level="2">
+      <label class="md-nav__title" for="nav-2-6">
+        <span class="md-nav__icon md-icon"></span>
+        三方库源码解析系列
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="nav-2-6-1" type="checkbox" id="nav-2-6-1" >
+    <label class="md-nav__link" for="nav-2-6-1">
+      Glide
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="Glide" data-md-level="3">
+      <label class="md-nav__title" for="nav-2-6-1">
+        <span class="md-nav__icon md-icon"></span>
+        Glide
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../android/third-party/glide/" class="md-nav__link">
+      Glide源码解析导航
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="nav-2-6-2" type="checkbox" id="nav-2-6-2" >
+    <label class="md-nav__link" for="nav-2-6-2">
+      Volley
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="Volley" data-md-level="3">
+      <label class="md-nav__title" for="nav-2-6-2">
+        <span class="md-nav__icon md-icon"></span>
+        Volley
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../android/third-party/volley/" class="md-nav__link">
+      Volley源码解析导航
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="nav-2-6-3" type="checkbox" id="nav-2-6-3" >
+    <label class="md-nav__link" for="nav-2-6-3">
+      Eventbus
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="Eventbus" data-md-level="3">
+      <label class="md-nav__title" for="nav-2-6-3">
+        <span class="md-nav__icon md-icon"></span>
+        Eventbus
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../android/third-party/eventbus/" class="md-nav__link">
+      Eventbus
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3" >
+    <label class="md-nav__link" for="nav-3">
+      Git
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="Git" data-md-level="1">
+      <label class="md-nav__title" for="nav-3">
+        <span class="md-nav__icon md-icon"></span>
+        Git
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../git/2020-03-16-Git%E5%91%BD%E4%BB%A4/" class="md-nav__link">
+      Git创建、配置、添加到撤销等命令
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../git/2020-04-10-git%20branch%2C%20git%20checkout%20and%20git%20merge/" class="md-nav__link">
+      git branch, git checkout and git merge
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../git/2020-04-10-git%20pull%20vs%20git%20fetch/" class="md-nav__link">
+      git pull vs git fetch
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../git/2020-04-10-Git%E9%87%8D%E5%86%99%E5%8E%86%E5%8F%B2/" class="md-nav__link">
+      Git重写历史
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4" >
+    <label class="md-nav__link" for="nav-4">
+      Network
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="Network" data-md-level="1">
+      <label class="md-nav__title" for="nav-4">
+        <span class="md-nav__icon md-icon"></span>
+        Network
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="nav-4-1" type="checkbox" id="nav-4-1" >
+    <label class="md-nav__link" for="nav-4-1">
+      HTTP
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="HTTP" data-md-level="2">
+      <label class="md-nav__title" for="nav-4-1">
+        <span class="md-nav__icon md-icon"></span>
+        HTTP
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../network/http/2020-04-16-HTTP%E5%8D%8F%E8%AE%AE%E6%80%BB%E8%BF%B0/" class="md-nav__link">
+      HTTP协议总述
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../network/http/2020-08-03-%E8%AF%A6%E8%A7%A3HTTP/" class="md-nav__link">
+      详解HTTP
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../network/http/2020-08-03-URL%E3%80%81URN%E5%92%8CURI/" class="md-nav__link">
+      URL、URN和URI
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5" checked>
+    <label class="md-nav__link" for="nav-5">
+      Others
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="Others" data-md-level="1">
+      <label class="md-nav__title" for="nav-5">
+        <span class="md-nav__icon md-icon"></span>
+        Others
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="nav-5-1" type="checkbox" id="nav-5-1" >
+    <label class="md-nav__link" for="nav-5-1">
+      Mkdocs
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="Mkdocs" data-md-level="2">
+      <label class="md-nav__title" for="nav-5-1">
+        <span class="md-nav__icon md-icon"></span>
+        Mkdocs
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../mkdocs/2020-09-14-mkdocs%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97/" class="md-nav__link">
+      mkdocs使用指南
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="nav-5-2" type="checkbox" id="nav-5-2" >
+    <label class="md-nav__link" for="nav-5-2">
+      bug记录
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="bug记录" data-md-level="2">
+      <label class="md-nav__title" for="nav-5-2">
+        <span class="md-nav__icon md-icon"></span>
+        bug记录
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../bug%20records/2020-11-30/" class="md-nav__link">
+      bug知识点记录
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../2020-09-14-UML/" class="md-nav__link">
+      UML
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../2020-03-12-gradle-aliyun-%E4%BB%A3%E7%90%86/" class="md-nav__link">
+      gradle aliyun代理
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../2020-03-14-Android%E9%A1%B9%E7%9B%AE%E7%9A%84gradle%E4%BE%9D%E8%B5%96%E8%B7%AF%E5%BE%84%E8%AE%B0%E5%BD%95/" class="md-nav__link">
+      Android项目的gradle依赖路径记录
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../2020-04-06-SSH/" class="md-nav__link">
+      SSH
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../2020-04-08-Vi/" class="md-nav__link">
+      Vim使用笔记
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        加盐密码哈希
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+    
+    <a href="./" class="md-nav__link md-nav__link--active">
+      加盐密码哈希
+    </a>
+    
+      
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    密码哈希的概念
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    破解密码哈希的方式
+  </a>
+  
+    <nav class="md-nav" aria-label="破解密码哈希的方式">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    字典破解和暴力破解（猜密码）
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lookup-tables" class="md-nav__link">
+    查表法（Lookup Tables）
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#reverse-lookup-tables" class="md-nav__link">
+    反向查表法（Reverse Lookup Tables）
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rainbow-tables" class="md-nav__link">
+    彩虹表（Rainbow Tables）
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    加盐（可以使查表法和彩虹表失效）
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    错误的方式：两次哈希&amp;奇怪的哈希函数
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    正确的方式：如何正确地哈希
+  </a>
+  
+    <nav class="md-nav" aria-label="正确的方式：如何正确地哈希">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    基本方式：加盐
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#webhash" class="md-nav__link">
+    在Web应用中，始终在服务器上计算hash
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    使密码破解更难：慢哈希函数
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    不可能破解的哈希：密钥哈希和密码哈希硬件
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    常见问题
+  </a>
+  
+    <nav class="md-nav" aria-label="常见问题">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    该选用哪些哈希算法？
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_12" class="md-nav__link">
+    当用户忘记密码的时候，如何允许他们重置密码？
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_13" class="md-nav__link">
+    是否需要强制用户使用复杂的密码？
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_14" class="md-nav__link">
+    为什么要求在密码校验的时候，经过固定的时间返回？
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+    
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../2020-06-06-flask%2Buwsgi%E5%90%8E%E5%8F%B0%E6%90%AD%E5%BB%BA/" class="md-nav__link">
+      flask+uwsgi后台搭建+分页接口设计
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    密码哈希的概念
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    破解密码哈希的方式
+  </a>
+  
+    <nav class="md-nav" aria-label="破解密码哈希的方式">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    字典破解和暴力破解（猜密码）
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lookup-tables" class="md-nav__link">
+    查表法（Lookup Tables）
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#reverse-lookup-tables" class="md-nav__link">
+    反向查表法（Reverse Lookup Tables）
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rainbow-tables" class="md-nav__link">
+    彩虹表（Rainbow Tables）
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    加盐（可以使查表法和彩虹表失效）
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    错误的方式：两次哈希&amp;奇怪的哈希函数
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    正确的方式：如何正确地哈希
+  </a>
+  
+    <nav class="md-nav" aria-label="正确的方式：如何正确地哈希">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    基本方式：加盐
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#webhash" class="md-nav__link">
+    在Web应用中，始终在服务器上计算hash
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    使密码破解更难：慢哈希函数
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    不可能破解的哈希：密钥哈希和密码哈希硬件
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    常见问题
+  </a>
+  
+    <nav class="md-nav" aria-label="常见问题">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    该选用哪些哈希算法？
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_12" class="md-nav__link">
+    当用户忘记密码的时候，如何允许他们重置密码？
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_13" class="md-nav__link">
+    是否需要强制用户使用复杂的密码？
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_14" class="md-nav__link">
+    为什么要求在密码校验的时候，经过固定的时间返回？
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                
+                  <h1>加盐密码哈希</h1>
+                
+                <blockquote>
+<p>本文是根据 <a href="https://crackstation.net/hashing-security.htm">Salted Password Hashing - Doing it Right</a>翻译整理出来的。旨在对加盐密码哈希的概念以及正确做法有一定的了解。</p>
+</blockquote>
+<p>现如今的用户登录系统基本是采用用户和密码的方式，保护密码的最好方式就是使用**加盐密码哈希**，本文不仅介绍密码哈希的正常使用方式（<strong>What</strong>），而且解释为什么要这么做（<strong>Why</strong>）。</p>
+<blockquote>
+<p>⚠️不要自己编写密码哈希代码，而是使用编程语言中已经封装好了的函数。</p>
+</blockquote>
+<h2 id="_1">密码哈希的概念<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<p>哈希算法将所有的数据转换成**同一长度的“fingerprint”**，并且是**不可逆转**的。两个数据即使只是相差一点点，其转换成的哈希值也是完全不一样的。哈希的前两个性质使得其能用来保护密码，但是我们也需要验证密码是否是正确的。</p>
+<p>基于密码哈希加密的账户系统的用户**注册和认证**的一般框架流程为：</p>
+<ol>
+<li>注册一个用户名，将用户名以及哈希后的密码存储到数据库中</li>
+<li>尝试登录的时候，会比对用户名以及密码哈希</li>
+<li>如果验证成功，则准许登录，失败则提示“用户名或密码错误”。</li>
+</ol>
+<blockquote>
+<p>⚠️在尝试登录的时候，输入的密码错误，也要提示为“用户名或密码错误”，不能仅仅提示“密码错误”。这防止攻击者知道这是个有效的用户名。</p>
+</blockquote>
+<p>用于保护密码的哈希函数和数据结构中的哈希函数是不一样的，因为数据结构中的哈希函数（比如哈希表）是为了加速查找，是不安全的。**加密哈希函数**是用来实现密码哈希，例如SHA256，SHA512，RipeMD和WHIRLPOOL等。</p>
+<p>虽然，在一定程度上，密码哈希能都保护密码，但它也不是完全安全的。由于以下原因：</p>
+<ul>
+<li>有许多方式将密码哈希转化成密码，而且转换速度很快</li>
+<li>简单的密码哈希计算起来很快</li>
+</ul>
+<h2 id="_2">破解密码哈希的方式<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<h3 id="_3">字典破解和暴力破解（猜密码）<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h3>
+<p>这类方法的基本想法就是，猜测一系列密码，然后逐个转换成哈希值，与系统中的密码进行匹配。</p>
+<ul>
+<li>**字典破解：**字典文件中包含大量的单词、短语、常见密码等字符串。是用过从大量文本甚至是从真实的密码数据库中提取出来构成的。</li>
+<li>**暴力破解：**就是遍历所有字符组合的可能性，然后试探。</li>
+</ul>
+<blockquote>
+<p>猜密码的这类方法无法防止，但是其一般是效率不高的。</p>
+</blockquote>
+<h3 id="lookup-tables">查表法（Lookup Tables）<a class="headerlink" href="#lookup-tables" title="Permanent link">&para;</a></h3>
+<p>查找表是一种快速破解相同类型密码哈希的有效的方法。其基本想法是**预先计算出**密码字典中所有的密码对应的哈希值，并且存储起来。</p>
+<p>一个实现得比较好的查找表每秒可以处理数百个哈希查找，即使查找表中包含数十亿个哈希。</p>
+<div class="highlight"><pre><span></span><code>Searching: 5f4dcc3b5aa765d61d8327deb882cf99: FOUND: password5
+Searching: 6cbe615c106f422d23669b610b564800:  not in database
+Searching: 630bf032efe4507f2c57b280995925a9: FOUND: letMEin12
+Searching: 386f43fab5d096a7a66d67c8f213e5ec: FOUND: mcd0nalds
+Searching: d5ec75d5fe70d428685510fae36492d9: FOUND: p@ssw0rd!
+</code></pre></div>
+<h3 id="reverse-lookup-tables">反向查表法（Reverse Lookup Tables）<a class="headerlink" href="#reverse-lookup-tables" title="Permanent link">&para;</a></h3>
+<p>同时对多个哈希值进行字典攻击或者暴力攻击，而**不需要预先计算出一个查找表。**步骤：</p>
+<ul>
+<li>基于某个已经破解的数据库，构造一个密码-用户名一对多的表</li>
+<li>猜测一系列哈希值并且从表中查找拥有此密码的用户</li>
+</ul>
+<div class="highlight"><pre><span></span><code>Searching for hash(apple) in users&#39; hash list...     : Matches [alice3, 0bob0, charles8]
+Searching for hash(blueberry) in users&#39; hash list... : Matches [usr10101, timmy, john91]
+Searching for hash(letmein) in users&#39; hash list...   : Matches [wilson10, dragonslayerX, joe1984]
+Searching for hash(s3cr3t) in users&#39; hash list...    : Matches [bruce19, knuth1337, john87]
+Searching for hash(z@29hjja) in users&#39; hash list...  : No users used this password
+</code></pre></div>
+<blockquote>
+<p>该方法通常是有效的，因为许多用户可能在不同的系统中使用相同的密码。</p>
+</blockquote>
+<h3 id="rainbow-tables">彩虹表（Rainbow Tables）<a class="headerlink" href="#rainbow-tables" title="Permanent link">&para;</a></h3>
+<p>彩虹表是一种权衡空间和时间开销的综合破解方法。与查找表类似，只是为了使空间更小，而使破解时间增长了。</p>
+<h2 id="_4">加盐（可以使查表法和彩虹表失效）<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
+<p>所谓加盐，就是在用户设置的密码上，再加上一个字符串，称之为**“盐”**，然后将**盐**同用户名和密码一起存储到数据库中。而查表法和彩虹表之所以有效，是因为对密码的哈希方式是一样的。</p>
+<div class="highlight"><pre><span></span><code>hash(&quot;hello&quot;)                    = 2cf24dba5fb0a30e26e83b2ac5b9e29e1b161e5c1fa7425e73043362938b9824
+hash(&quot;hello&quot; + &quot;QxLUF1bgIAdeQX&quot;) = 9e209040c863f84a31e719795b2577523954739fe5ed3b58a75cff2127075ed1
+hash(&quot;hello&quot; + &quot;bv5PehSMfV11Cd&quot;) = d1d3ec2e6f20fd420d50e2642992841d8338a314b8ea157c9e18477aaef226ab
+hash(&quot;hello&quot; + &quot;YYLmfY6IehjZMQ&quot;) = a49670c3c18b9e079b9cfaf51634f563dc8ae3070db2c4a8544305df1b60f007
+</code></pre></div>
+<blockquote>
+<ul>
+<li>⚠️<strong>不要重复使用同一个字符串充当盐，而是采用随机字符串，并且在创建账户和修改密码的时候需要再次随机产生一个盐。</strong></li>
+<li>⚠️**不要使用过短的字符串充当盐。**如果盐过短，那么可以针对不同的盐创建查找表，这样的开销也不至于不可承受。</li>
+</ul>
+</blockquote>
+<h2 id="_5">错误的方式：两次哈希&amp;奇怪的哈希函数<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h2>
+<p>有些系统中使用多次哈希，或者一些哈希函数的组合，来使密码保护更安全。但是，在实践中，并没有好处，有时可能会使哈希的安全性降低。例如：</p>
+<ul>
+<li>md5(sha1(password))</li>
+<li>md5(md5(salt) + md5(password))</li>
+<li>sha1(sha1(password))</li>
+<li>sha1(str_rot13(password + salt))</li>
+<li>md5(sha1(md5(md5(password) + sha1(password)) + md5(password)))</li>
+</ul>
+<blockquote>
+<p>此部分存在争议，</p>
+<ul>
+<li>因为有的人认为使用两次哈希或者组合哈希函数，会让攻击者猜不到使用的哈希函数，但是根据 <a href="https://en.wikipedia.org/wiki/Kerckhoffs's_principle">Kerckhoffs's principle</a>，攻击者通常能够看到源代码，进而能够根据源代码中使用的哈希函数，来预计算查找表。</li>
+<li>还有人认为复杂的哈希函数可以增大计算开销，使哈希函数计算时间变长。但是本文作者认为使用这种方式延长计算时间是不妥当的，应该使用专家设计的算法，例如HMAC。</li>
+</ul>
+<p><strong>作者强烈推荐使用专家设计的哈希函数计算哈希值，而不要自己胡搞！！！</strong></p>
+</blockquote>
+<h2 id="_6">正确的方式：如何正确地哈希<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h2>
+<h3 id="_7">基本方式：加盐<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h3>
+<p>前面已经介绍了，所谓加盐，就是在用户设置的密码上，再加上一个字符串，称之为**“盐”**，然后将**盐**同用户名和密码一起存储到数据库中。</p>
+<h3 id="webhash">在Web应用中，始终在服务器上计算hash<a class="headerlink" href="#webhash" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>为什么不能仅仅只在客户端计算哈希值，即服务器之间接受客户端计算的哈希值然后存储到数据库中？</strong></li>
+</ul>
+<p>因为如果坏人知道了该用户对应的密码哈希值，就可以直接将该哈希值发送给服务器，而不需要知道密码就能登录系统。</p>
+<ul>
+<li>
+<p>**在客户端计算哈希值之后，也需要在服务端再次计算哈希值。**在客户端进行哈希后，请注意以下几点：</p>
+</li>
+<li>
+<p><strong>客户端的密码哈希并不能替代HTTPS</strong>。如果浏览器端和服务端之间的连接是不安全的，中间人可以下载JS代码对其修改，以删除哈希功能获得用户密码。</p>
+</li>
+<li><strong>一些浏览器并不支持JS。</strong></li>
+<li><strong>浏览器端的密码哈希也需要加盐。</strong></li>
+</ul>
+<h3 id="_8">使密码破解更难：慢哈希函数<a class="headerlink" href="#_8" title="Permanent link">&para;</a></h3>
+<p><strong>虽然加盐能够防止查表法和彩虹表破解方法，但是不能阻止字典攻击和暴力攻击这类猜密码的攻击方式</strong>。GPU的出现能够加快计算效率。所以需要使用更慢的哈希函数，来使得这类破解方法无效。常用的方式为：<strong>key stretching</strong>.</p>
+<p>**key stretching**的基本思想是使得哈希函数计算慢，即使是用GPU加速或者特定硬件也快不起来，但是也不影响正常的用户登录。例如： <a href="http://en.wikipedia.org/wiki/PBKDF2">PBKDF2</a> or <a href="http://en.wikipedia.org/wiki/Bcrypt">bcrypt</a></p>
+<h3 id="_9">不可能破解的哈希：密钥哈希和密码哈希硬件<a class="headerlink" href="#_9" title="Permanent link">&para;</a></h3>
+<p>只要系统允许攻击者检验一个密码是否正确，就可以使用**字典攻击或者暴力攻击**的方式。因此，可以加入密钥的方式，让只有知道密钥的人才能校验密码。实现方式：</p>
+<ul>
+<li>将哈希值加密。例如AES算法</li>
+<li>将密钥加入到哈希字符串中，例如<a href="http://en.wikipedia.org/wiki/HMAC">HMAC</a></li>
+</ul>
+<p>说起来简单，其实现安全的关键就是将密钥存储在哪里，无论如何也不能让攻击者获得。因此密钥需要存储在外部系统中，比如另一个用于密码校验的服务器，或者一个特制硬件，例如<a href="https://www.yubico.com/YubiHSM">YubiHSM</a>。</p>
+<blockquote>
+<p><strong>作者强烈建议：10万用户以上的大型服务需要使用这类方法。</strong></p>
+</blockquote>
+<h2 id="_10">常见问题<a class="headerlink" href="#_10" title="Permanent link">&para;</a></h2>
+<h3 id="_11">该选用哪些哈希算法？<a class="headerlink" href="#_11" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>选用</strong>：</li>
+<li>Well-designed key stretching algorithms such as <a href="http://en.wikipedia.org/wiki/PBKDF2">PBKDF2</a>, <a href="http://en.wikipedia.org/wiki/Bcrypt">bcrypt</a>, and <a href="http://www.tarsnap.com/scrypt.html">scrypt</a>.</li>
+<li>OpenWall's <a href="http://www.openwall.com/phpass/">Portable PHP password hashing framework</a></li>
+<li><a href="https://github.com/defuse/password-hashing">My implementations of PBKDF2 in PHP, C#, Java, and Ruby.</a></li>
+<li>Secure versions of <a href="http://en.wikipedia.org/wiki/Crypt_(Unix)#Library_Function_crypt.283.29">crypt</a> (<span><span class="MathJax_Preview">2y</span><script type="math/tex">2y</script></span>, <span><span class="MathJax_Preview">5</span><script type="math/tex">5</script></span>, <span><span class="MathJax_Preview">6</span><script type="math/tex">6</script></span>)</li>
+<li><strong>不该用</strong>：</li>
+<li>快速的密码学哈希算法：MD5, SHA1, SHA256, SHA512, RipeMD, WHIRLPOOL, SHA3, etc.</li>
+<li>Insecure versions of  <a href="http://en.wikipedia.org/wiki/Crypt_(Unix)#Library_Function_crypt.283.29">crypt</a> (<span><span class="MathJax_Preview">1</span><script type="math/tex">1</script></span>, <span><span class="MathJax_Preview">2</span><script type="math/tex">2</script></span>, <span><span class="MathJax_Preview">2x</span><script type="math/tex">2x</script></span>, <span><span class="MathJax_Preview">3</span><script type="math/tex">3</script></span>).</li>
+<li>自己设计的任何哈希算法</li>
+</ul>
+<h3 id="_12">当用户忘记密码的时候，如何允许他们重置密码？<a class="headerlink" href="#_12" title="Permanent link">&para;</a></h3>
+<blockquote>
+<p>当对安全性有很高要求的场景，不要让用户重设密码。</p>
+</blockquote>
+<p>使用邮箱验证发送链接来重设密码。<strong>需要注意的地方：</strong></p>
+<ul>
+<li>为邮件链接设置过期时间</li>
+<li>邮件中不要包含用户信息</li>
+<li>重置密码的时候，使用一个新的随机盐加入到新密码中。</li>
+</ul>
+<h3 id="_13">是否需要强制用户使用复杂的密码？<a class="headerlink" href="#_13" title="Permanent link">&para;</a></h3>
+<ul>
+<li>如果系统的安全性要求不是太高的时候，就不要限制用户。如果真的需要，那么在界面上显示需要设置密码的条件</li>
+<li>不要强制要求用户频繁更改密码，最多半年一次</li>
+</ul>
+<h3 id="_14">为什么要求在密码校验的时候，经过固定的时间返回？<a class="headerlink" href="#_14" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>如果采用比对完就返回，那么当出错的时候，结果返回得就会相对快一些</strong>；</li>
+<li>假设攻击者已经知道了密码哈希的所有参数（盐和哈希函数等等），那么就能采用计时攻击方式去破解，步骤如下：</li>
+<li>首先攻击者准备256个字符串，其哈希值的第一个字符包含了所有的情况。</li>
+<li>然后分别去攻击系统，记录下返回的时间，耗时最长的那个就匹配密码哈希第一个字符，以此类推，得到所有的字符情况</li>
+<li>在攻击者获得了足够长的哈希片段，就可以在自己机器上破解，完全不受在线系统的影响。</li>
+</ul>
+                
+                  
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid" aria-label="Footer">
+        
+          <a href="../2020-04-08-Vi/" class="md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-footer-nav__button md-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+            </div>
+            <div class="md-footer-nav__title">
+              <div class="md-ellipsis">
+                <span class="md-footer-nav__direction">
+                  上一页
+                </span>
+                Vim使用笔记
+              </div>
+            </div>
+          </a>
+        
+        
+          <a href="../2020-06-06-flask%2Buwsgi%E5%90%8E%E5%8F%B0%E6%90%AD%E5%BB%BA/" class="md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-footer-nav__title">
+              <div class="md-ellipsis">
+                <span class="md-footer-nav__direction">
+                  下一页
+                </span>
+                flask+uwsgi后台搭建+分页接口设计
+              </div>
+            </div>
+            <div class="md-footer-nav__button md-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    </div>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+          <div class="md-footer-copyright__highlight">
+            &copy; 2020 小木
+          </div>
+        
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs
+        </a>
+      </div>
+      
+  <div class="md-footer-social">
+    
+      
+      
+        
+        
+      
+      <a href="https://github.com/shengleiRain" target="_blank" rel="noopener" title="github.com" class="md-footer-social__link">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+      </a>
+    
+  </div>
+
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="../../assets/javascripts/vendor.fd16492e.min.js"></script>
+      <script src="../../assets/javascripts/bundle.7836ba4d.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "\u590d\u5236", "clipboard.copied": "\u5df2\u590d\u5236", "search.config.lang": "ja", "search.config.pipeline": "trimmer, stemmer", "search.config.separator": "[\\uff0c\\u3002]+", "search.placeholder": "\u641c\u7d22", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}</script>
+      
+      <script>
+        app = initialize({
+          base: "../..",
+          features: [],
+          search: Object.assign({
+            worker: "../../assets/javascripts/worker/search.4ac00218.min.js"
+          }, typeof search !== "undefined" && search)
+        })
+      </script>
+      
+        <script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+      
+        <script src="../../js/baidu-tongji.js"></script>
+      
+        <script src="../../js/extras.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+      
+    
+  </body>
+</html>

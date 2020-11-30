@@ -1,0 +1,1483 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="记录生活、技术，点点滴滴">
+      
+      
+      
+      
+        <meta name="author" content="Rain">
+      
+      <link rel="shortcut icon" href="../../../assets/images/favicon.ico">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-6.1.6">
+    
+    
+      
+        <title>Kotlin协程（三） - 小木个人笔记</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.6910b76c.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.196e0c26.min.css">
+        
+          
+          
+          <meta name="theme-color" content="#ffffff">
+        
+      
+    
+    
+    
+      
+        
+        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>body,input{font-family:"Roboto",-apple-system,BlinkMacSystemFont,Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono",SFMono-Regular,Consolas,Menlo,monospace}</style>
+      
+    
+    
+    
+    
+      
+        
+<script>window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)},ga.l=+new Date,ga("create","UA-155096376-1","auto"),ga("set","anonymizeIp",!0),ga("send","pageview"),document.addEventListener("DOMContentLoaded",function(){document.forms.search&&document.forms.search.query.addEventListener("blur",function(){if(this.value){var e=document.location.pathname;ga("send","pageview",e+"?q="+this.value)}})}),document.addEventListener("DOMContentSwitch",function(){ga("send","pageview",document.location.pathname)})</script>
+<script async src="https://www.google-analytics.com/analytics.js"></script>
+      
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="white" data-md-color-accent="blue">
+      
+  
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#_1" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid" aria-label="Header">
+    <a href="../../.." title="小木个人笔记" class="md-header-nav__button md-logo" aria-label="小木个人笔记">
+      
+  <img src="../../../assets/images/favicon.ico" alt="logo">
+
+    </a>
+    <label class="md-header-nav__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header-nav__title" data-md-component="header-title">
+      
+        <div class="md-header-nav__ellipsis">
+          <span class="md-header-nav__topic md-ellipsis">
+            小木个人笔记
+          </span>
+          <span class="md-header-nav__topic md-ellipsis">
+            
+              Kotlin协程（三）
+            
+          </span>
+        </div>
+      
+    </div>
+    
+      <label class="md-header-nav__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <button type="reset" class="md-search__icon md-icon" aria-label="Clear" data-md-component="search-reset" tabindex="-1">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header-nav__source">
+        
+<a href="https://github.com/shengleiRain/shengleiRain.github.io" title="前往 GitHub 仓库" class="md-source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05L244 40.45a28.87 28.87 0 00-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 01-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 000 40.81l195.61 195.6a28.86 28.86 0 0040.8 0l194.69-194.69a28.86 28.86 0 000-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    shengleiRain/shengleiRain.io
+  </div>
+</a>
+      </div>
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="小木个人笔记" class="md-nav__button md-logo" aria-label="小木个人笔记">
+      
+  <img src="../../../assets/images/favicon.ico" alt="logo">
+
+    </a>
+    小木个人笔记
+  </label>
+  
+    <div class="md-nav__source">
+      
+<a href="https://github.com/shengleiRain/shengleiRain.github.io" title="前往 GitHub 仓库" class="md-source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05L244 40.45a28.87 28.87 0 00-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 01-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 000 40.81l195.61 195.6a28.86 28.86 0 0040.8 0l194.69-194.69a28.86 28.86 0 000-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    shengleiRain/shengleiRain.io
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../../.." class="md-nav__link">
+      Home
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2" checked>
+    <label class="md-nav__link" for="nav-2">
+      Android
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="Android" data-md-level="1">
+      <label class="md-nav__title" for="nav-2">
+        <span class="md-nav__icon md-icon"></span>
+        Android
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../2020-06-04-material%20design/" class="md-nav__link">
+      material design概述
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="nav-2-2" type="checkbox" id="nav-2-2" >
+    <label class="md-nav__link" for="nav-2-2">
+      Android Studio
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="Android Studio" data-md-level="2">
+      <label class="md-nav__title" for="nav-2-2">
+        <span class="md-nav__icon md-icon"></span>
+        Android Studio
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Android%20studio/2020-09-14-debug%E6%8A%80%E5%B7%A7/" class="md-nav__link">
+      debug技巧
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="nav-2-3" type="checkbox" id="nav-2-3" checked>
+    <label class="md-nav__link" for="nav-2-3">
+      Kotlin
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="Kotlin" data-md-level="2">
+      <label class="md-nav__title" for="nav-2-3">
+        <span class="md-nav__icon md-icon"></span>
+        Kotlin
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../2020-03-11-%E6%A0%87%E5%87%86%E5%87%BD%E6%95%B0%E6%80%BB%E7%BB%93/" class="md-nav__link">
+      Kotlin 标准函数总结
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../2020-03-13-Kotlin%E5%8D%8F%E7%A8%8B%EF%BC%88%E4%B8%80%EF%BC%89/" class="md-nav__link">
+      Kotlin协程（一）
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../2020-03-13-Kotlin%E5%8D%8F%E7%A8%8B%EF%BC%88%E4%BA%8C%EF%BC%89/" class="md-nav__link">
+      Kotlin协程（二）
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        Kotlin协程（三）
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+    
+    <a href="./" class="md-nav__link md-nav__link--active">
+      Kotlin协程（三）
+    </a>
+    
+      
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    系列相关文章
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    概述
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    实际案例：排序列表
+  </a>
+  
+    <nav class="md-nav" aria-label="实际案例：排序列表">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    整体架构
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#viewmodel-repository-dao" class="md-nav__link">
+    ViewModel, Repository, Dao的实现
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#productdb" class="md-nav__link">
+    ProductDB数据库的实现
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#activityfragmentviewmodel" class="md-nav__link">
+    如何在Activity或Fragment中绑定ViewModel
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bug" class="md-nav__link">
+    修复bug
+  </a>
+  
+    <nav class="md-nav" aria-label="修复bug">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    解决方法
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    取消之前的并开始新的
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    加入之前的请求，并取消本次请求
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#task" class="md-nav__link">
+    顺序执行，同时只执行一个task
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    参考文档
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+    
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="nav-2-4" type="checkbox" id="nav-2-4" >
+    <label class="md-nav__link" for="nav-2-4">
+      Jetpack
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="Jetpack" data-md-level="2">
+      <label class="md-nav__title" for="nav-2-4">
+        <span class="md-nav__icon md-icon"></span>
+        Jetpack
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../jetpack/" class="md-nav__link">
+      Navigation
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="nav-2-5" type="checkbox" id="nav-2-5" >
+    <label class="md-nav__link" for="nav-2-5">
+      Framework系列
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="Framework系列" data-md-level="2">
+      <label class="md-nav__title" for="nav-2-5">
+        <span class="md-nav__icon md-icon"></span>
+        Framework系列
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../framework/" class="md-nav__link">
+      Framework系列导航
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="nav-2-6" type="checkbox" id="nav-2-6" >
+    <label class="md-nav__link" for="nav-2-6">
+      三方库源码解析系列
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="三方库源码解析系列" data-md-level="2">
+      <label class="md-nav__title" for="nav-2-6">
+        <span class="md-nav__icon md-icon"></span>
+        三方库源码解析系列
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="nav-2-6-1" type="checkbox" id="nav-2-6-1" >
+    <label class="md-nav__link" for="nav-2-6-1">
+      Glide
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="Glide" data-md-level="3">
+      <label class="md-nav__title" for="nav-2-6-1">
+        <span class="md-nav__icon md-icon"></span>
+        Glide
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../third-party/glide/" class="md-nav__link">
+      Glide源码解析导航
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="nav-2-6-2" type="checkbox" id="nav-2-6-2" >
+    <label class="md-nav__link" for="nav-2-6-2">
+      Volley
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="Volley" data-md-level="3">
+      <label class="md-nav__title" for="nav-2-6-2">
+        <span class="md-nav__icon md-icon"></span>
+        Volley
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../third-party/volley/" class="md-nav__link">
+      Volley源码解析导航
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="nav-2-6-3" type="checkbox" id="nav-2-6-3" >
+    <label class="md-nav__link" for="nav-2-6-3">
+      Eventbus
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="Eventbus" data-md-level="3">
+      <label class="md-nav__title" for="nav-2-6-3">
+        <span class="md-nav__icon md-icon"></span>
+        Eventbus
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../third-party/eventbus/" class="md-nav__link">
+      Eventbus
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3" >
+    <label class="md-nav__link" for="nav-3">
+      Git
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="Git" data-md-level="1">
+      <label class="md-nav__title" for="nav-3">
+        <span class="md-nav__icon md-icon"></span>
+        Git
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../git/2020-03-16-Git%E5%91%BD%E4%BB%A4/" class="md-nav__link">
+      Git创建、配置、添加到撤销等命令
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../git/2020-04-10-git%20branch%2C%20git%20checkout%20and%20git%20merge/" class="md-nav__link">
+      git branch, git checkout and git merge
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../git/2020-04-10-git%20pull%20vs%20git%20fetch/" class="md-nav__link">
+      git pull vs git fetch
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../git/2020-04-10-Git%E9%87%8D%E5%86%99%E5%8E%86%E5%8F%B2/" class="md-nav__link">
+      Git重写历史
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4" >
+    <label class="md-nav__link" for="nav-4">
+      Network
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="Network" data-md-level="1">
+      <label class="md-nav__title" for="nav-4">
+        <span class="md-nav__icon md-icon"></span>
+        Network
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="nav-4-1" type="checkbox" id="nav-4-1" >
+    <label class="md-nav__link" for="nav-4-1">
+      HTTP
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="HTTP" data-md-level="2">
+      <label class="md-nav__title" for="nav-4-1">
+        <span class="md-nav__icon md-icon"></span>
+        HTTP
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../network/http/2020-04-16-HTTP%E5%8D%8F%E8%AE%AE%E6%80%BB%E8%BF%B0/" class="md-nav__link">
+      HTTP协议总述
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../network/http/2020-08-03-%E8%AF%A6%E8%A7%A3HTTP/" class="md-nav__link">
+      详解HTTP
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../network/http/2020-08-03-URL%E3%80%81URN%E5%92%8CURI/" class="md-nav__link">
+      URL、URN和URI
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5" >
+    <label class="md-nav__link" for="nav-5">
+      Others
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="Others" data-md-level="1">
+      <label class="md-nav__title" for="nav-5">
+        <span class="md-nav__icon md-icon"></span>
+        Others
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="nav-5-1" type="checkbox" id="nav-5-1" >
+    <label class="md-nav__link" for="nav-5-1">
+      Mkdocs
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="Mkdocs" data-md-level="2">
+      <label class="md-nav__title" for="nav-5-1">
+        <span class="md-nav__icon md-icon"></span>
+        Mkdocs
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../others/mkdocs/2020-09-14-mkdocs%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97/" class="md-nav__link">
+      mkdocs使用指南
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="nav-5-2" type="checkbox" id="nav-5-2" >
+    <label class="md-nav__link" for="nav-5-2">
+      bug记录
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="bug记录" data-md-level="2">
+      <label class="md-nav__title" for="nav-5-2">
+        <span class="md-nav__icon md-icon"></span>
+        bug记录
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../others/bug%20records/2020-11-30/" class="md-nav__link">
+      bug知识点记录
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../others/2020-09-14-UML/" class="md-nav__link">
+      UML
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../others/2020-03-12-gradle-aliyun-%E4%BB%A3%E7%90%86/" class="md-nav__link">
+      gradle aliyun代理
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../others/2020-03-14-Android%E9%A1%B9%E7%9B%AE%E7%9A%84gradle%E4%BE%9D%E8%B5%96%E8%B7%AF%E5%BE%84%E8%AE%B0%E5%BD%95/" class="md-nav__link">
+      Android项目的gradle依赖路径记录
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../others/2020-04-06-SSH/" class="md-nav__link">
+      SSH
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../others/2020-04-08-Vi/" class="md-nav__link">
+      Vim使用笔记
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../others/2020-04-11-%E5%8A%A0%E7%9B%90%E5%AF%86%E7%A0%81%E5%93%88%E5%B8%8C/" class="md-nav__link">
+      加盐密码哈希
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../others/2020-06-06-flask%2Buwsgi%E5%90%8E%E5%8F%B0%E6%90%AD%E5%BB%BA/" class="md-nav__link">
+      flask+uwsgi后台搭建+分页接口设计
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    系列相关文章
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    概述
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    实际案例：排序列表
+  </a>
+  
+    <nav class="md-nav" aria-label="实际案例：排序列表">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    整体架构
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#viewmodel-repository-dao" class="md-nav__link">
+    ViewModel, Repository, Dao的实现
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#productdb" class="md-nav__link">
+    ProductDB数据库的实现
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#activityfragmentviewmodel" class="md-nav__link">
+    如何在Activity或Fragment中绑定ViewModel
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bug" class="md-nav__link">
+    修复bug
+  </a>
+  
+    <nav class="md-nav" aria-label="修复bug">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    解决方法
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    取消之前的并开始新的
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    加入之前的请求，并取消本次请求
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#task" class="md-nav__link">
+    顺序执行，同时只执行一个task
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    参考文档
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                
+                  <h1>Kotlin协程（三）</h1>
+                
+                <h2 id="_1">系列相关文章<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<p><a href="/android/kotlin/2020-03-13-Kotlin协程（一）">Kotlin协程（一）</a></p>
+<p><a href="/android/kotlin/2020-03-13-Kotlin协程（二）">Kotlin协程（二）</a></p>
+<h2 id="_2">概述<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<p>在前两篇文章介绍了Kotlin协程的应用场景和简单使用，代码相对比较简单。在这篇文章，通过一个简单的应用实例，介绍协程在Android中的真实应用，如何与其他组件配合使用的。</p>
+<p>总的来说，耗时的请求任务通常分为两种：</p>
+<ul>
+<li><strong>One Shot请求</strong>：也就是该请求被调用时，只执行一次，返回结果就意味着请求结束</li>
+<li><strong>Streaming(流)请求</strong>：也就是持续观察请求结果的变化，并及时把变化反应给调用者</li>
+</ul>
+<p>在本文中，我们通过<a href="https://github.com/shengleiRain/PreworkLearning/tree/master/coroutinedemos"><strong><em>显示一个排序列表</em></strong></a>来使用协程来实际完成One Shot请求。</p>
+<p>在Android中，One Shot请求问题一般包括：<strong>从数据库或者网络中拉取、存储或者更新数据</strong>。</p>
+<h2 id="_3">实际案例：排序列表<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
+<p>我们编写了一个简单的应用程序，能够对Product对象根据id升序或者降序显示在界面上。因为在对象数量很多的时候，排序过程可能花费超过1秒，因此不能阻塞主线程。而协程，**主线程安全的特性**可以发挥作用。</p>
+<h3 id="_4">整体架构<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h3>
+<p>本应用采用ViewModel+Room+WorkManager来实现。</p>
+<p><img alt="整体架构" src="../../../assets/images/android/kotlin/2020-03-15-%E5%8D%8F%E7%A8%8B-%E5%9B%BE1.png" /></p>
+<ul>
+<li>产品信息存储到数据库中，数据库实现采用Room</li>
+<li>ViewModel用来保存界面数据信息，确保数据在设备配置更改后仍然存在，而且当数据库发生更改时，通知LiveData，进而修改数据界面</li>
+<li>WorkManager整合协程，让任务能在后台运行</li>
+</ul>
+<p><img alt="ViewModel" src="../../../assets/images/android/kotlin/2020-03-15-%E5%8D%8F%E7%A8%8B-%E5%9B%BE2.png" /></p>
+<h3 id="viewmodel-repository-dao">ViewModel, Repository, Dao的实现<a class="headerlink" href="#viewmodel-repository-dao" title="Permanent link">&para;</a></h3>
+<p>根据以上的架构图，ViewModel持有Repository的引用，Repository持有Dao的引用。</p>
+<ul>
+<li>ViewModel负责获得数据之后，将数据显示到UI上</li>
+<li>Repository负责处理网络、数据库或者缓存中的数据（拉取、修改、删除等操作），该过程不能被ViewModel感知</li>
+<li>Dao负责数据数据库层面的处理</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">ProductsViewModel</span><span class="p">(</span><span class="k">private</span> <span class="k">val</span> <span class="py">productsRepository</span><span class="p">:</span> <span class="n">ProductsRepository</span><span class="p">)</span> <span class="p">:</span> <span class="n">ViewModel</span><span class="p">()</span> 
+
+<span class="c1">// 采用单例模式</span>
+<span class="k">class</span> <span class="nc">ProductsRepository</span> <span class="k">private</span> <span class="k">constructor</span><span class="p">(</span><span class="k">private</span> <span class="k">val</span> <span class="py">productsDao</span><span class="p">:</span> <span class="n">ProductsDao</span><span class="p">)</span> <span class="p">{</span>
+  <span class="c1">// 一些public函数被省略...</span>
+  <span class="k">companion</span> <span class="k">object</span> <span class="p">{</span>
+        <span class="n">@Volatile</span>
+        <span class="k">private</span> <span class="k">var</span> <span class="py">instance</span><span class="p">:</span> <span class="n">ProductsRepository</span><span class="p">?</span> <span class="p">=</span> <span class="k">null</span>
+
+        <span class="k">fun</span> <span class="nf">getInstance</span><span class="p">(</span><span class="n">productsDao</span><span class="p">:</span> <span class="n">ProductsDao</span><span class="p">):</span> <span class="n">ProductsRepository</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="n">instance</span> <span class="o">?:</span> <span class="n">synchronized</span><span class="p">(</span><span class="k">this</span><span class="p">)</span> <span class="p">{</span>
+                <span class="n">instance</span> <span class="o">?:</span> <span class="n">ProductsRepository</span><span class="p">(</span><span class="n">productsDao</span><span class="p">).</span><span class="n">also</span> <span class="p">{</span>
+                    <span class="n">instance</span> <span class="p">=</span> <span class="n">it</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="n">@Dao</span>
+<span class="k">interface</span> <span class="nc">ProductsDao</span> <span class="p">{}</span>
+</code></pre></div>
+<h3 id="productdb">ProductDB数据库的实现<a class="headerlink" href="#productdb" title="Permanent link">&para;</a></h3>
+<p>需要<code>@Database</code>注解，使得Room框架帮我们完成数据库的实现，我们只需要声明一个抽象类即可。</p>
+<p>如果需要在数据库的创建或者打开阶段执行一些操作，可以在数据库对象Builder加入<code>RoomDatabase.Callback()</code>,并且复写<code>onCreate</code>or<code>onOpen</code></p>
+<div class="highlight"><pre><span></span><code><span class="n">@Database</span><span class="p">(</span><span class="n">entities</span> <span class="p">=</span> <span class="n">arrayOf</span><span class="p">(</span><span class="n">Product</span><span class="o">::</span><span class="k">class</span><span class="p">),</span> <span class="n">version</span> <span class="p">=</span> <span class="m">1</span><span class="p">,</span> <span class="n">exportSchema</span> <span class="p">=</span> <span class="k">false</span><span class="p">)</span>
+<span class="k">abstract</span> <span class="k">class</span> <span class="nc">ProductDB</span> <span class="p">:</span> <span class="n">RoomDatabase</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">abstract</span> <span class="k">fun</span> <span class="nf">productDao</span><span class="p">():</span> <span class="n">ProductsDao</span>
+
+    <span class="k">companion</span> <span class="k">object</span> <span class="p">{</span>
+        <span class="n">@Volatile</span>
+        <span class="k">private</span> <span class="k">var</span> <span class="py">INSTANCE</span><span class="p">:</span> <span class="n">ProductDB</span><span class="p">?</span> <span class="p">=</span> <span class="k">null</span>
+
+        <span class="k">fun</span> <span class="nf">getDatabase</span><span class="p">(</span><span class="n">context</span><span class="p">:</span> <span class="n">Context</span><span class="p">):</span> <span class="n">ProductDB</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="n">INSTANCE</span> <span class="o">?:</span> <span class="n">synchronized</span><span class="p">(</span><span class="k">this</span><span class="p">)</span> <span class="p">{</span>
+                <span class="n">INSTANCE</span> <span class="o">?:</span> <span class="n">Room</span><span class="p">.</span><span class="n">databaseBuilder</span><span class="p">(</span>
+                    <span class="n">context</span><span class="p">,</span>
+                    <span class="n">ProductDB</span><span class="o">::</span><span class="k">class</span><span class="p">.</span><span class="n">java</span><span class="p">,</span>
+                    <span class="s">&quot;product_db&quot;</span>
+                <span class="p">).</span><span class="n">addCallback</span><span class="p">(</span><span class="n">ProductDBCallback</span><span class="p">(</span><span class="n">context</span><span class="p">))</span>
+                    <span class="p">.</span><span class="n">build</span><span class="p">().</span><span class="n">also</span> <span class="p">{</span> <span class="n">INSTANCE</span> <span class="p">=</span> <span class="n">it</span> <span class="p">}</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="k">private</span> <span class="k">class</span> <span class="nc">ProductDBCallback</span><span class="p">(</span><span class="k">private</span> <span class="k">val</span> <span class="py">context</span><span class="p">:</span> <span class="n">Context</span><span class="p">)</span> <span class="p">:</span> <span class="n">RoomDatabase</span><span class="p">.</span><span class="n">Callback</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">override</span> <span class="k">fun</span> <span class="nf">onCreate</span><span class="p">(</span><span class="n">db</span><span class="p">:</span> <span class="n">SupportSQLiteDatabase</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">super</span><span class="p">.</span><span class="n">onCreate</span><span class="p">(</span><span class="n">db</span><span class="p">)</span>
+            <span class="k">val</span> <span class="py">request</span> <span class="p">=</span> <span class="n">OneTimeWorkRequestBuilder</span><span class="p">&lt;</span><span class="n">ProductDatabaseWorker</span><span class="p">&gt;().</span><span class="n">build</span><span class="p">()</span>
+            <span class="n">WorkManager</span><span class="p">.</span><span class="n">getInstance</span><span class="p">(</span><span class="n">context</span><span class="p">).</span><span class="n">enqueue</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<h3 id="activityfragmentviewmodel">如何在Activity或Fragment中绑定ViewModel<a class="headerlink" href="#activityfragmentviewmodel" title="Permanent link">&para;</a></h3>
+<p>Android提供了<a href="https://developer.android.google.cn/reference/androidx/lifecycle/ViewModelProvider?hl=en">ViewModelProvider</a>来获得ViewModel并为其绑定所有者。</p>
+<div class="highlight"><pre><span></span><code><span class="n">productViewModel</span> <span class="p">=</span> <span class="n">ViewModelProvider</span><span class="p">(</span>
+  <span class="k">this</span><span class="p">,</span>
+  <span class="n">InjectorUtils</span><span class="p">.</span><span class="n">productViewModelFactory</span><span class="p">(</span><span class="k">this</span><span class="p">)</span> <span class="c1">// 自定义的工厂类，用来创建ViewModel</span>
+<span class="p">).</span><span class="k">get</span><span class="p">(</span><span class="n">ProductsViewModel</span><span class="o">::</span><span class="k">class</span><span class="p">.</span><span class="n">java</span><span class="p">)</span>
+</code></pre></div>
+<p>在<a href="https://github.com/android/sunflower">sunflower-jetpack最佳实践</a>中，Fragment委托给<code>viewmodels</code>来完成ViewModel的初始化和绑定所有者。</p>
+<div class="highlight"><pre><span></span><code><span class="k">private</span> <span class="k">val</span> <span class="py">viewModel</span><span class="p">:</span> <span class="n">GardenPlantingListViewModel</span> <span class="k">by</span> <span class="n">viewModels</span> <span class="p">{</span>
+  <span class="n">InjectorUtils</span><span class="p">.</span><span class="n">provideGardenPlantingListViewModelFactory</span><span class="p">(</span><span class="n">requireContext</span><span class="p">())</span><span class="c1">// 一个自定义的工厂对象</span>
+<span class="p">}</span>
+</code></pre></div>
+<h3 id="bug">修复bug<a class="headerlink" href="#bug" title="Permanent link">&para;</a></h3>
+<blockquote>
+<p><strong>问题描述</strong>：当排序过程耗时很长的时候，如果我们多次点击按钮，那么可能出现排序结果不符合我们预期的现象。</p>
+<p><strong>问题分析</strong>：这是由于每点击一次按钮，就有一次排序请求。</p>
+</blockquote>
+<h4 id="_5">解决方法<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h4>
+<ul>
+<li>在排序过程中，禁止按钮点击。</li>
+<li>取消之前的请求，同时开始这次请求</li>
+<li>将请求入队，按顺序执行</li>
+<li>如果是重新请求与之前的请求一样的请求，那么取消本次请求，继续之前的请求</li>
+</ul>
+<p><a href="https://gist.github.com/objcode/7ab4e7b1df8acd88696cb0ccecad16f7#file-concurrencyhelpers-kt-L91">示例代码</a></p>
+<h4 id="_6">取消之前的并开始新的<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">ControlledRunner</span><span class="p">&lt;</span><span class="n">T</span><span class="p">&gt;</span> <span class="p">{</span>
+    <span class="cm">/**</span>
+<span class="cm">     * 现在运行的任务</span>
+<span class="cm">     * 用原子类封装，保证线程安全</span>
+<span class="cm">     */</span>
+    <span class="k">private</span> <span class="k">val</span> <span class="py">activeTask</span> <span class="p">=</span> <span class="n">AtomicReference</span><span class="p">&lt;</span><span class="n">Deferred</span><span class="p">&lt;</span><span class="n">T</span><span class="p">&gt;?&gt;(</span><span class="k">null</span><span class="p">)</span>
+   <span class="cm">/**</span>
+<span class="cm">     * 取消之前的任务，并且开始运行新的任务</span>
+<span class="cm">     */</span>
+    <span class="n">suspend</span> <span class="k">fun</span> <span class="nf">cancelPreviousThenRun</span><span class="p">(</span><span class="n">block</span><span class="p">:</span> <span class="n">suspend</span> <span class="p">()</span> <span class="p">-&gt;</span> <span class="n">T</span><span class="p">):</span> <span class="n">T</span> <span class="p">{</span>
+        <span class="c1">// 如果现在有运行的任务，取消它</span>
+        <span class="n">activeTask</span><span class="p">.</span><span class="k">get</span><span class="p">()</span><span class="o">?.</span><span class="n">cancelAndJoin</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">coroutineScope</span> <span class="p">{</span>
+            <span class="k">val</span> <span class="py">newTask</span> <span class="p">=</span> <span class="n">async</span><span class="p">(</span><span class="n">start</span> <span class="p">=</span> <span class="n">CoroutineStart</span><span class="p">.</span><span class="n">LAZY</span><span class="p">)</span> <span class="p">{</span>
+                <span class="n">block</span><span class="p">()</span>
+            <span class="p">}</span>
+
+            <span class="c1">// 在newTask完成后，将activeTask重置为null</span>
+            <span class="n">newTask</span><span class="p">.</span><span class="n">invokeOnCompletion</span> <span class="p">{</span>
+                <span class="n">activeTask</span><span class="p">.</span><span class="n">compareAndSet</span><span class="p">(</span><span class="n">newTask</span><span class="p">,</span> <span class="k">null</span><span class="p">)</span>
+            <span class="p">}</span>
+            <span class="k">val</span> <span class="py">result</span><span class="p">:</span> <span class="n">T</span>
+            <span class="c1">// 这个无限循环是确保，之前所有任务都被取消，新的任务准备执行</span>
+            <span class="k">while</span> <span class="p">(</span><span class="k">true</span><span class="p">)</span> <span class="p">{</span>
+                <span class="k">if</span> <span class="p">(!</span><span class="n">activeTask</span><span class="p">.</span><span class="n">compareAndSet</span><span class="p">(</span><span class="k">null</span><span class="p">,</span> <span class="n">newTask</span><span class="p">))</span> <span class="p">{</span>
+                    <span class="n">activeTask</span><span class="p">.</span><span class="k">get</span><span class="p">()</span><span class="o">?.</span><span class="n">cancelAndJoin</span><span class="p">()</span>
+                    <span class="c1">// 释放出本协程的执行机会，让该调度下面的其他协程先执行完</span>
+                    <span class="n">yield</span><span class="p">()</span>
+                <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+                    <span class="n">result</span> <span class="p">=</span> <span class="n">newTask</span><span class="p">.</span><span class="n">await</span><span class="p">()</span>
+                    <span class="k">break</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+            <span class="n">result</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<h4 id="_7">加入之前的请求，并取消本次请求<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code><span class="n">suspend</span> <span class="k">fun</span> <span class="nf">joinPreviousOrRun</span><span class="p">(</span><span class="n">block</span><span class="p">:</span> <span class="n">suspend</span> <span class="p">()</span> <span class="p">-&gt;</span> <span class="n">T</span><span class="p">):</span> <span class="n">T</span> <span class="p">{</span>
+        <span class="c1">// 如果有task在运行，那么直接让它运行</span>
+        <span class="n">activeTask</span><span class="p">.</span><span class="k">get</span><span class="p">()</span><span class="o">?.</span><span class="n">let</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="n">it</span><span class="p">.</span><span class="n">await</span><span class="p">()</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="n">coroutineScope</span> <span class="p">{</span>
+            <span class="k">val</span> <span class="py">newTask</span> <span class="p">=</span> <span class="n">async</span><span class="p">(</span><span class="n">start</span> <span class="p">=</span> <span class="n">CoroutineStart</span><span class="p">.</span><span class="n">LAZY</span><span class="p">)</span> <span class="p">{</span>
+                <span class="n">block</span><span class="p">()</span>
+            <span class="p">}</span>
+            <span class="n">newTask</span><span class="p">.</span><span class="n">invokeOnCompletion</span> <span class="p">{</span>
+                <span class="n">activeTask</span><span class="p">.</span><span class="n">compareAndSet</span><span class="p">(</span><span class="n">newTask</span><span class="p">,</span> <span class="k">null</span><span class="p">)</span>
+            <span class="p">}</span>
+            <span class="k">val</span> <span class="py">result</span><span class="p">:</span> <span class="n">T</span>
+            <span class="c1">// 这个无限循环是确保，之前所有任务都被取消，新的任务准备执行</span>
+            <span class="k">while</span> <span class="p">(</span><span class="k">true</span><span class="p">)</span> <span class="p">{</span>
+                <span class="k">if</span> <span class="p">(!</span><span class="n">activeTask</span><span class="p">.</span><span class="n">compareAndSet</span><span class="p">(</span><span class="k">null</span><span class="p">,</span> <span class="n">newTask</span><span class="p">))</span> <span class="p">{</span>
+                    <span class="k">val</span> <span class="py">currentTask</span> <span class="p">=</span> <span class="n">activeTask</span><span class="p">.</span><span class="k">get</span><span class="p">()</span>
+                    <span class="k">if</span> <span class="p">(</span><span class="n">currentTask</span> <span class="p">!=</span> <span class="k">null</span><span class="p">)</span> <span class="p">{</span>
+                        <span class="n">newTask</span><span class="p">.</span><span class="n">cancel</span><span class="p">()</span>
+                        <span class="n">result</span> <span class="p">=</span> <span class="n">currentTask</span><span class="p">.</span><span class="n">await</span><span class="p">()</span>
+                        <span class="k">break</span>
+                    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+                        <span class="n">yield</span><span class="p">()</span>
+                    <span class="p">}</span>
+                <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+                    <span class="n">result</span> <span class="p">=</span> <span class="n">newTask</span><span class="p">.</span><span class="n">await</span><span class="p">()</span>
+                    <span class="k">break</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+            <span class="n">result</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+</code></pre></div>
+<h4 id="task">顺序执行，同时只执行一个task<a class="headerlink" href="#task" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">SingleRunner</span><span class="p">()</span> <span class="p">{</span>
+    <span class="c1">// 提供一个锁，来保证在同一时间只有一个特定请求的协程运行</span>
+    <span class="k">private</span> <span class="k">val</span> <span class="py">mutex</span> <span class="p">=</span> <span class="n">Mutex</span><span class="p">()</span>
+
+    <span class="c1">// 在运行block()之前，保证没有其他任务运行在mutex</span>
+    <span class="n">suspend</span> <span class="k">fun</span> <span class="p">&lt;</span><span class="n">T</span><span class="p">&gt;</span> <span class="nf">afterPrevious</span><span class="p">(</span><span class="n">block</span><span class="p">:</span> <span class="n">suspend</span> <span class="p">()</span> <span class="p">-&gt;</span> <span class="n">T</span><span class="p">):</span> <span class="n">T</span> <span class="p">{</span>
+        <span class="n">mutex</span><span class="p">.</span><span class="n">withLock</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="n">block</span><span class="p">()</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<h2 id="_8">参考文档<a class="headerlink" href="#_8" title="Permanent link">&para;</a></h2>
+<p><a href="https://medium.com/androiddevelopers/coroutines-on-android-part-iii-real-work-2ba8a2ec2f45">Coroutines On Android (part III): Real work</a></p>
+                
+                  
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid" aria-label="Footer">
+        
+          <a href="../2020-03-13-Kotlin%E5%8D%8F%E7%A8%8B%EF%BC%88%E4%BA%8C%EF%BC%89/" class="md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-footer-nav__button md-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+            </div>
+            <div class="md-footer-nav__title">
+              <div class="md-ellipsis">
+                <span class="md-footer-nav__direction">
+                  上一页
+                </span>
+                Kotlin协程（二）
+              </div>
+            </div>
+          </a>
+        
+        
+          <a href="../../jetpack/" class="md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-footer-nav__title">
+              <div class="md-ellipsis">
+                <span class="md-footer-nav__direction">
+                  下一页
+                </span>
+                Navigation
+              </div>
+            </div>
+            <div class="md-footer-nav__button md-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    </div>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+          <div class="md-footer-copyright__highlight">
+            &copy; 2020 小木
+          </div>
+        
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs
+        </a>
+      </div>
+      
+  <div class="md-footer-social">
+    
+      
+      
+        
+        
+      
+      <a href="https://github.com/shengleiRain" target="_blank" rel="noopener" title="github.com" class="md-footer-social__link">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+      </a>
+    
+  </div>
+
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="../../../assets/javascripts/vendor.fd16492e.min.js"></script>
+      <script src="../../../assets/javascripts/bundle.7836ba4d.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "\u590d\u5236", "clipboard.copied": "\u5df2\u590d\u5236", "search.config.lang": "ja", "search.config.pipeline": "trimmer, stemmer", "search.config.separator": "[\\uff0c\\u3002]+", "search.placeholder": "\u641c\u7d22", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}</script>
+      
+      <script>
+        app = initialize({
+          base: "../../..",
+          features: [],
+          search: Object.assign({
+            worker: "../../../assets/javascripts/worker/search.4ac00218.min.js"
+          }, typeof search !== "undefined" && search)
+        })
+      </script>
+      
+        <script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+      
+        <script src="../../../js/baidu-tongji.js"></script>
+      
+        <script src="../../../js/extras.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+      
+    
+  </body>
+</html>

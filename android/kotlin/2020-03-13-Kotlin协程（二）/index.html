@@ -1,0 +1,1362 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="记录生活、技术，点点滴滴">
+      
+      
+      
+      
+        <meta name="author" content="Rain">
+      
+      <link rel="shortcut icon" href="../../../assets/images/favicon.ico">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-6.1.6">
+    
+    
+      
+        <title>Kotlin协程（二） - 小木个人笔记</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.6910b76c.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.196e0c26.min.css">
+        
+          
+          
+          <meta name="theme-color" content="#ffffff">
+        
+      
+    
+    
+    
+      
+        
+        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>body,input{font-family:"Roboto",-apple-system,BlinkMacSystemFont,Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono",SFMono-Regular,Consolas,Menlo,monospace}</style>
+      
+    
+    
+    
+    
+      
+        
+<script>window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)},ga.l=+new Date,ga("create","UA-155096376-1","auto"),ga("set","anonymizeIp",!0),ga("send","pageview"),document.addEventListener("DOMContentLoaded",function(){document.forms.search&&document.forms.search.query.addEventListener("blur",function(){if(this.value){var e=document.location.pathname;ga("send","pageview",e+"?q="+this.value)}})}),document.addEventListener("DOMContentSwitch",function(){ga("send","pageview",document.location.pathname)})</script>
+<script async src="https://www.google-analytics.com/analytics.js"></script>
+      
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="white" data-md-color-accent="blue">
+      
+  
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#_1" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid" aria-label="Header">
+    <a href="../../.." title="小木个人笔记" class="md-header-nav__button md-logo" aria-label="小木个人笔记">
+      
+  <img src="../../../assets/images/favicon.ico" alt="logo">
+
+    </a>
+    <label class="md-header-nav__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header-nav__title" data-md-component="header-title">
+      
+        <div class="md-header-nav__ellipsis">
+          <span class="md-header-nav__topic md-ellipsis">
+            小木个人笔记
+          </span>
+          <span class="md-header-nav__topic md-ellipsis">
+            
+              Kotlin协程（二）
+            
+          </span>
+        </div>
+      
+    </div>
+    
+      <label class="md-header-nav__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <button type="reset" class="md-search__icon md-icon" aria-label="Clear" data-md-component="search-reset" tabindex="-1">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header-nav__source">
+        
+<a href="https://github.com/shengleiRain/shengleiRain.github.io" title="前往 GitHub 仓库" class="md-source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05L244 40.45a28.87 28.87 0 00-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 01-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 000 40.81l195.61 195.6a28.86 28.86 0 0040.8 0l194.69-194.69a28.86 28.86 0 000-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    shengleiRain/shengleiRain.io
+  </div>
+</a>
+      </div>
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="小木个人笔记" class="md-nav__button md-logo" aria-label="小木个人笔记">
+      
+  <img src="../../../assets/images/favicon.ico" alt="logo">
+
+    </a>
+    小木个人笔记
+  </label>
+  
+    <div class="md-nav__source">
+      
+<a href="https://github.com/shengleiRain/shengleiRain.github.io" title="前往 GitHub 仓库" class="md-source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05L244 40.45a28.87 28.87 0 00-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 01-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 000 40.81l195.61 195.6a28.86 28.86 0 0040.8 0l194.69-194.69a28.86 28.86 0 000-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    shengleiRain/shengleiRain.io
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../../.." class="md-nav__link">
+      Home
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2" checked>
+    <label class="md-nav__link" for="nav-2">
+      Android
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="Android" data-md-level="1">
+      <label class="md-nav__title" for="nav-2">
+        <span class="md-nav__icon md-icon"></span>
+        Android
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../2020-06-04-material%20design/" class="md-nav__link">
+      material design概述
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="nav-2-2" type="checkbox" id="nav-2-2" >
+    <label class="md-nav__link" for="nav-2-2">
+      Android Studio
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="Android Studio" data-md-level="2">
+      <label class="md-nav__title" for="nav-2-2">
+        <span class="md-nav__icon md-icon"></span>
+        Android Studio
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Android%20studio/2020-09-14-debug%E6%8A%80%E5%B7%A7/" class="md-nav__link">
+      debug技巧
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="nav-2-3" type="checkbox" id="nav-2-3" checked>
+    <label class="md-nav__link" for="nav-2-3">
+      Kotlin
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="Kotlin" data-md-level="2">
+      <label class="md-nav__title" for="nav-2-3">
+        <span class="md-nav__icon md-icon"></span>
+        Kotlin
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../2020-03-11-%E6%A0%87%E5%87%86%E5%87%BD%E6%95%B0%E6%80%BB%E7%BB%93/" class="md-nav__link">
+      Kotlin 标准函数总结
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../2020-03-13-Kotlin%E5%8D%8F%E7%A8%8B%EF%BC%88%E4%B8%80%EF%BC%89/" class="md-nav__link">
+      Kotlin协程（一）
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        Kotlin协程（二）
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+    
+    <a href="./" class="md-nav__link md-nav__link--active">
+      Kotlin协程（二）
+    </a>
+    
+      
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    系列相关文章
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    概述
+  </a>
+  
+    <nav class="md-nav" aria-label="概述">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#work-leak" class="md-nav__link">
+    Work leak
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#structured-concurrency" class="md-nav__link">
+    Structured concurrency(并发结构)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#scopes" class="md-nav__link">
+    用scopes取消任务
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    如何开启一个新的协程
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#viewmodel" class="md-nav__link">
+    在ViewModel中使用协程
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#work" class="md-nav__link">
+    保持跟踪work的状态
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    当一个协程发生错误时报告错误
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    参考文档
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+    
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../2020-03-15-Kotlin%E5%8D%8F%E7%A8%8B%EF%BC%88%E4%B8%89%EF%BC%89/" class="md-nav__link">
+      Kotlin协程（三）
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="nav-2-4" type="checkbox" id="nav-2-4" >
+    <label class="md-nav__link" for="nav-2-4">
+      Jetpack
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="Jetpack" data-md-level="2">
+      <label class="md-nav__title" for="nav-2-4">
+        <span class="md-nav__icon md-icon"></span>
+        Jetpack
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../jetpack/" class="md-nav__link">
+      Navigation
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="nav-2-5" type="checkbox" id="nav-2-5" >
+    <label class="md-nav__link" for="nav-2-5">
+      Framework系列
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="Framework系列" data-md-level="2">
+      <label class="md-nav__title" for="nav-2-5">
+        <span class="md-nav__icon md-icon"></span>
+        Framework系列
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../framework/" class="md-nav__link">
+      Framework系列导航
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="nav-2-6" type="checkbox" id="nav-2-6" >
+    <label class="md-nav__link" for="nav-2-6">
+      三方库源码解析系列
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="三方库源码解析系列" data-md-level="2">
+      <label class="md-nav__title" for="nav-2-6">
+        <span class="md-nav__icon md-icon"></span>
+        三方库源码解析系列
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="nav-2-6-1" type="checkbox" id="nav-2-6-1" >
+    <label class="md-nav__link" for="nav-2-6-1">
+      Glide
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="Glide" data-md-level="3">
+      <label class="md-nav__title" for="nav-2-6-1">
+        <span class="md-nav__icon md-icon"></span>
+        Glide
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../third-party/glide/" class="md-nav__link">
+      Glide源码解析导航
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="nav-2-6-2" type="checkbox" id="nav-2-6-2" >
+    <label class="md-nav__link" for="nav-2-6-2">
+      Volley
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="Volley" data-md-level="3">
+      <label class="md-nav__title" for="nav-2-6-2">
+        <span class="md-nav__icon md-icon"></span>
+        Volley
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../third-party/volley/" class="md-nav__link">
+      Volley源码解析导航
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="nav-2-6-3" type="checkbox" id="nav-2-6-3" >
+    <label class="md-nav__link" for="nav-2-6-3">
+      Eventbus
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="Eventbus" data-md-level="3">
+      <label class="md-nav__title" for="nav-2-6-3">
+        <span class="md-nav__icon md-icon"></span>
+        Eventbus
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../third-party/eventbus/" class="md-nav__link">
+      Eventbus
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3" >
+    <label class="md-nav__link" for="nav-3">
+      Git
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="Git" data-md-level="1">
+      <label class="md-nav__title" for="nav-3">
+        <span class="md-nav__icon md-icon"></span>
+        Git
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../git/2020-03-16-Git%E5%91%BD%E4%BB%A4/" class="md-nav__link">
+      Git创建、配置、添加到撤销等命令
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../git/2020-04-10-git%20branch%2C%20git%20checkout%20and%20git%20merge/" class="md-nav__link">
+      git branch, git checkout and git merge
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../git/2020-04-10-git%20pull%20vs%20git%20fetch/" class="md-nav__link">
+      git pull vs git fetch
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../git/2020-04-10-Git%E9%87%8D%E5%86%99%E5%8E%86%E5%8F%B2/" class="md-nav__link">
+      Git重写历史
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4" >
+    <label class="md-nav__link" for="nav-4">
+      Network
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="Network" data-md-level="1">
+      <label class="md-nav__title" for="nav-4">
+        <span class="md-nav__icon md-icon"></span>
+        Network
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="nav-4-1" type="checkbox" id="nav-4-1" >
+    <label class="md-nav__link" for="nav-4-1">
+      HTTP
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="HTTP" data-md-level="2">
+      <label class="md-nav__title" for="nav-4-1">
+        <span class="md-nav__icon md-icon"></span>
+        HTTP
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../network/http/2020-04-16-HTTP%E5%8D%8F%E8%AE%AE%E6%80%BB%E8%BF%B0/" class="md-nav__link">
+      HTTP协议总述
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../network/http/2020-08-03-%E8%AF%A6%E8%A7%A3HTTP/" class="md-nav__link">
+      详解HTTP
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../network/http/2020-08-03-URL%E3%80%81URN%E5%92%8CURI/" class="md-nav__link">
+      URL、URN和URI
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5" >
+    <label class="md-nav__link" for="nav-5">
+      Others
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="Others" data-md-level="1">
+      <label class="md-nav__title" for="nav-5">
+        <span class="md-nav__icon md-icon"></span>
+        Others
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="nav-5-1" type="checkbox" id="nav-5-1" >
+    <label class="md-nav__link" for="nav-5-1">
+      Mkdocs
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="Mkdocs" data-md-level="2">
+      <label class="md-nav__title" for="nav-5-1">
+        <span class="md-nav__icon md-icon"></span>
+        Mkdocs
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../others/mkdocs/2020-09-14-mkdocs%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97/" class="md-nav__link">
+      mkdocs使用指南
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="nav-5-2" type="checkbox" id="nav-5-2" >
+    <label class="md-nav__link" for="nav-5-2">
+      bug记录
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="bug记录" data-md-level="2">
+      <label class="md-nav__title" for="nav-5-2">
+        <span class="md-nav__icon md-icon"></span>
+        bug记录
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../others/bug%20records/2020-11-30/" class="md-nav__link">
+      bug知识点记录
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../others/2020-09-14-UML/" class="md-nav__link">
+      UML
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../others/2020-03-12-gradle-aliyun-%E4%BB%A3%E7%90%86/" class="md-nav__link">
+      gradle aliyun代理
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../others/2020-03-14-Android%E9%A1%B9%E7%9B%AE%E7%9A%84gradle%E4%BE%9D%E8%B5%96%E8%B7%AF%E5%BE%84%E8%AE%B0%E5%BD%95/" class="md-nav__link">
+      Android项目的gradle依赖路径记录
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../others/2020-04-06-SSH/" class="md-nav__link">
+      SSH
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../others/2020-04-08-Vi/" class="md-nav__link">
+      Vim使用笔记
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../others/2020-04-11-%E5%8A%A0%E7%9B%90%E5%AF%86%E7%A0%81%E5%93%88%E5%B8%8C/" class="md-nav__link">
+      加盐密码哈希
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../others/2020-06-06-flask%2Buwsgi%E5%90%8E%E5%8F%B0%E6%90%AD%E5%BB%BA/" class="md-nav__link">
+      flask+uwsgi后台搭建+分页接口设计
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    系列相关文章
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    概述
+  </a>
+  
+    <nav class="md-nav" aria-label="概述">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#work-leak" class="md-nav__link">
+    Work leak
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#structured-concurrency" class="md-nav__link">
+    Structured concurrency(并发结构)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#scopes" class="md-nav__link">
+    用scopes取消任务
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    如何开启一个新的协程
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#viewmodel" class="md-nav__link">
+    在ViewModel中使用协程
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#work" class="md-nav__link">
+    保持跟踪work的状态
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    当一个协程发生错误时报告错误
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    参考文档
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                
+                  <h1>Kotlin协程（二）</h1>
+                
+                <h2 id="_1">系列相关文章<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<p><a href="/android/kotlin/2020-03-13-Kotlin协程（一）">Kotlin协程（一）</a></p>
+<p><a href="/android/kotlin/2020-03-15-Kotlin协程（三）">Kotlin协程（三）</a></p>
+<h2 id="_2">概述<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<p>在上一篇文章中，我们已经知道协程能够优雅地解决以下两个编程问题：</p>
+<ul>
+<li><strong>用线性的代码代替Callbacks</strong>，使耗时任务不在主线程中运行</li>
+<li><strong>主线程安全</strong>, 能够在主线程中调用***任何suspend方法***</li>
+</ul>
+<p>但是呢，也存在一个问题，<strong><em>无法跟踪协程工作执行状态或者取消协程</em></strong>。这可能会导致发生**work leak**的问题。</p>
+<h3 id="work-leak">Work leak<a class="headerlink" href="#work-leak" title="Permanent link">&para;</a></h3>
+<p>Work leak 类似于内存泄漏，但是比内存泄漏更加严重，可能在一个不必要的协程上浪费内存、CPU、磁盘等资源。为了解决这个问题，Kotlin引入了<a href="https://kotlinlang.org/docs/reference/coroutines/basics.html#structured-concurrency"><strong>structured concurrency</strong></a></p>
+<h3 id="structured-concurrency">Structured concurrency(并发结构)<a class="headerlink" href="#structured-concurrency" title="Permanent link">&para;</a></h3>
+<ul>
+<li>当一个work不在需要，取消它</li>
+<li>当work正在运行，跟踪它的状态</li>
+<li>当协程发生错误，报告错误</li>
+</ul>
+<h3 id="scopes">用scopes取消任务<a class="headerlink" href="#scopes" title="Permanent link">&para;</a></h3>
+<p>在Kotlin中，协程必须运行在<code>CoroutineScope</code>中，<code>CoroutineScope</code>能够监控协程的状态。而且，Kotlin不允许在<code>CoroutineScope</code>外面开启协程。</p>
+<blockquote>
+<p><code>CoroutineScope</code>能够取消所有在它范围内的协程。</p>
+</blockquote>
+<h3 id="_3">如何开启一个新的协程<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h3>
+<ul>
+<li><a href="https://kotlin.github.io/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines/launch.html"><strong>launch</strong></a> 开启一个协程，而不会返回result给调用者</li>
+<li><a href="https://kotlin.github.io/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines/async.html"><strong>async</strong></a> 开启一个协程，允许返回有着<code>await</code>suspend方法的result</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="n">scopes</span><span class="p">.</span><span class="n">launch</span> <span class="p">{</span>
+  <span class="c1">// 开启一个新的协程，在这个scope中</span>
+  <span class="c1">// suspend function</span>
+  <span class="n">slowFetch</span><span class="p">()</span>
+<span class="p">}</span>
+</code></pre></div>
+<blockquote>
+<p><strong>Launch是普通方法在协程中运行的桥梁</strong>，在launch中可以调用suspend functions.</p>
+<p>⚠️ <code>launch</code>和<code>async</code>的一个差异在于**处理异常**的不同。<code>async</code>希望我们最终能够调用<code>await</code>来得到结果或者异常，所以默认不会抛出异常。<code>launch</code>则会主动抛出异常。</p>
+</blockquote>
+<h3 id="viewmodel">在ViewModel中使用协程<a class="headerlink" href="#viewmodel" title="Permanent link">&para;</a></h3>
+<blockquote>
+<p>一个Scope的销毁，会导致该Scope中所有的协程都会取消。</p>
+</blockquote>
+<p><code>ViewModel</code>中有一个成员变量<code>viewModelScope</code>继承了<code>CoroutineScope</code>,定义如下：</p>
+<div class="highlight"><pre><span></span><code><span class="cm">/**</span>
+<span class="cm"> * [CoroutineScope] tied to this [ViewModel].</span>
+<span class="cm"> * This scope will be canceled when ViewModel will be cleared, i.e [ViewModel.onCleared] is called</span>
+<span class="cm"> *</span>
+<span class="cm"> * This scope is bound to [Dispatchers.Main]</span>
+<span class="cm"> */</span>
+<span class="k">val</span> <span class="py">ViewModel</span><span class="p">.</span><span class="n">viewModelScope</span><span class="p">:</span> <span class="n">CoroutineScope</span>
+        <span class="k">get</span><span class="p">()</span> <span class="p">{</span>
+            <span class="k">val</span> <span class="py">scope</span><span class="p">:</span> <span class="n">CoroutineScope</span><span class="p">?</span> <span class="p">=</span> <span class="k">this</span><span class="p">.</span><span class="n">getTag</span><span class="p">(</span><span class="n">JOB_KEY</span><span class="p">)</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">scope</span> <span class="p">!=</span> <span class="k">null</span><span class="p">)</span> <span class="p">{</span>
+                <span class="k">return</span> <span class="n">scope</span>
+            <span class="p">}</span>
+            <span class="k">return</span> <span class="n">setTagIfAbsent</span><span class="p">(</span><span class="n">JOB_KEY</span><span class="p">,</span>
+                <span class="n">CloseableCoroutineScope</span><span class="p">(</span><span class="n">SupervisorJob</span><span class="p">()</span> <span class="p">+</span> <span class="n">Dispatchers</span><span class="p">.</span><span class="n">Main</span><span class="p">))</span>
+        <span class="p">}</span>
+
+<span class="k">internal</span> <span class="k">class</span> <span class="nc">CloseableCoroutineScope</span><span class="p">(</span><span class="n">context</span><span class="p">:</span> <span class="n">CoroutineContext</span><span class="p">)</span> <span class="p">:</span> <span class="n">Closeable</span><span class="p">,</span> <span class="n">CoroutineScope</span> <span class="p">{</span>
+    <span class="k">override</span> <span class="k">val</span> <span class="py">coroutineContext</span><span class="p">:</span> <span class="n">CoroutineContext</span> <span class="p">=</span> <span class="n">context</span>
+
+    <span class="k">override</span> <span class="k">fun</span> <span class="nf">close</span><span class="p">()</span> <span class="p">{</span>
+        <span class="n">coroutineContext</span><span class="p">.</span><span class="n">cancel</span><span class="p">()</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<ul>
+<li>该scope绑定在**Dispatchers.Main**</li>
+<li>当该viewModel被cleared，scope也会被取消，因此scope中的协程也会被取消，不会导致work leak.</li>
+<li>就算是在无限循环的协程中，也不会发生work leak</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">MyViewModel</span><span class="p">():</span><span class="n">ViewModel</span><span class="p">{</span>
+  <span class="k">fun</span> <span class="nf">runForever</span><span class="p">()</span> <span class="p">{</span>
+      <span class="c1">// start a new coroutine in the ViewModel</span>
+      <span class="n">viewModelScope</span><span class="p">.</span><span class="n">launch</span> <span class="p">{</span>
+          <span class="c1">// cancelled when the ViewModel is cleared</span>
+          <span class="k">while</span><span class="p">(</span><span class="k">true</span><span class="p">)</span> <span class="p">{</span>
+              <span class="n">delay</span><span class="p">(</span><span class="m">1</span><span class="n">_000</span><span class="p">)</span>
+              <span class="c1">// do something every second</span>
+          <span class="p">}</span>
+      <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<h3 id="work">保持跟踪work的状态<a class="headerlink" href="#work" title="Permanent link">&para;</a></h3>
+<p>有时候需要多个请求任务同时进行，那么需要<a href="https://kotlin.github.io/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines/coroutine-scope.html">coroutineScope</a> 或者<a href="https://kotlin.github.io/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines/supervisor-scope.html">supervisorScope</a>。</p>
+<blockquote>
+<p><code>coroutineScope</code>和<code>supervisorScope</code>都将会等待子协程完成。在子协程全部完成之后，scope才会释放。<strong>在这些scope中，还能够开启新的scope。</strong></p>
+</blockquote>
+<div class="highlight"><pre><span></span><code><span class="n">suspend</span> <span class="k">fun</span> <span class="nf">showSomeData</span><span class="p">()</span> <span class="p">=</span> <span class="n">coroutineScope</span> <span class="p">{</span>
+    <span class="k">val</span> <span class="py">data</span> <span class="p">=</span> <span class="n">async</span><span class="p">(</span><span class="n">Dispatchers</span><span class="p">.</span><span class="n">IO</span><span class="p">)</span> <span class="p">{</span> <span class="c1">// &lt;- extension on current scope</span>
+     <span class="p">...</span> <span class="n">load</span> <span class="n">some</span> <span class="n">UI</span> <span class="k">data</span> <span class="k">for</span> <span class="n">the</span> <span class="n">Main</span> <span class="n">thread</span> <span class="p">...</span>
+    <span class="p">}</span>
+
+    <span class="n">withContext</span><span class="p">(</span><span class="n">Dispatchers</span><span class="p">.</span><span class="n">Main</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">doSomeWork</span><span class="p">()</span>
+        <span class="k">val</span> <span class="py">result</span> <span class="p">=</span> <span class="k">data</span><span class="p">.</span><span class="n">await</span><span class="p">()</span>
+        <span class="n">display</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<ul>
+<li>如果主scope取消了，也就是<code>coroutineScope</code>和<code>supervisorScope</code>取消了，其中的子scope也会被取消；</li>
+</ul>
+<blockquote>
+<p><strong><code>coroutineScope</code>会被取消，只要其中有一个子协程抛出了异常或者发生了错误，<code>supervisorScope</code>不会被取消，如果其中有一个子协程抛出了异常或者发生了错误</strong></p>
+</blockquote>
+<h3 id="_4">当一个协程发生错误时报告错误<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="k">val</span> <span class="py">unrelatedScope</span> <span class="p">=</span> <span class="n">MainScope</span><span class="p">()</span>
+<span class="c1">// example of a lost error</span>
+<span class="n">suspend</span> <span class="k">fun</span> <span class="nf">lostError</span><span class="p">()</span> <span class="p">{</span>
+    <span class="c1">// async without structured concurrency</span>
+    <span class="n">unrelatedScope</span><span class="p">.</span><span class="n">async</span> <span class="p">{</span>
+        <span class="k">throw</span> <span class="n">InAsyncNoOneCanHearYou</span><span class="p">(</span><span class="s">&quot;except&quot;</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>以上这种情况不会抛出异常，这个异常信息会丢失。原因前面分析过了，<strong><em>async方式开启的协程，默认不会处理异常，需要调用者自己处理</em></strong>。</p>
+<p>针对这种情况，可以采用<code>coroutineScope</code>再封装一层，因为<code>coroutineScope</code>会等待所有子协程完成，当子协程发生错误时，也会被通知到。</p>
+<div class="highlight"><pre><span></span><code><span class="n">suspend</span> <span class="k">fun</span> <span class="nf">foundError</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">coroutineScope</span> <span class="p">{</span>
+        <span class="n">async</span> <span class="p">{</span> 
+            <span class="k">throw</span> <span class="n">StructuredConcurrencyWill</span><span class="p">(</span><span class="s">&quot;throw&quot;</span><span class="p">)</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<h2 id="_5">参考文档<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h2>
+<p><a href="https://medium.com/androiddevelopers/coroutines-on-android-part-ii-getting-started-3bff117176dd">Coroutines on Android (part II): Getting started</a></p>
+                
+                  
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid" aria-label="Footer">
+        
+          <a href="../2020-03-13-Kotlin%E5%8D%8F%E7%A8%8B%EF%BC%88%E4%B8%80%EF%BC%89/" class="md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-footer-nav__button md-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+            </div>
+            <div class="md-footer-nav__title">
+              <div class="md-ellipsis">
+                <span class="md-footer-nav__direction">
+                  上一页
+                </span>
+                Kotlin协程（一）
+              </div>
+            </div>
+          </a>
+        
+        
+          <a href="../2020-03-15-Kotlin%E5%8D%8F%E7%A8%8B%EF%BC%88%E4%B8%89%EF%BC%89/" class="md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-footer-nav__title">
+              <div class="md-ellipsis">
+                <span class="md-footer-nav__direction">
+                  下一页
+                </span>
+                Kotlin协程（三）
+              </div>
+            </div>
+            <div class="md-footer-nav__button md-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    </div>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+          <div class="md-footer-copyright__highlight">
+            &copy; 2020 小木
+          </div>
+        
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs
+        </a>
+      </div>
+      
+  <div class="md-footer-social">
+    
+      
+      
+        
+        
+      
+      <a href="https://github.com/shengleiRain" target="_blank" rel="noopener" title="github.com" class="md-footer-social__link">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+      </a>
+    
+  </div>
+
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="../../../assets/javascripts/vendor.fd16492e.min.js"></script>
+      <script src="../../../assets/javascripts/bundle.7836ba4d.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "\u590d\u5236", "clipboard.copied": "\u5df2\u590d\u5236", "search.config.lang": "ja", "search.config.pipeline": "trimmer, stemmer", "search.config.separator": "[\\uff0c\\u3002]+", "search.placeholder": "\u641c\u7d22", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}</script>
+      
+      <script>
+        app = initialize({
+          base: "../../..",
+          features: [],
+          search: Object.assign({
+            worker: "../../../assets/javascripts/worker/search.4ac00218.min.js"
+          }, typeof search !== "undefined" && search)
+        })
+      </script>
+      
+        <script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+      
+        <script src="../../../js/baidu-tongji.js"></script>
+      
+        <script src="../../../js/extras.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+      
+    
+  </body>
+</html>
