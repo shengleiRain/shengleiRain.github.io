@@ -1,6 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>给博客加上Https</title>
+    <url>/posts/4126678771/</url>
+    <content><![CDATA[<span id="more"></span>
+
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a href="https://github.com/acmesh-official/acme.sh/wiki/%E8%AF%B4%E6%98%8E">acme.sh使用说明</a><br><a href="https://github.com/acmesh-official/acme.sh/wiki/dnsapi">acme.sh dnsapi</a><br><a href="https://d.cellmean.com/p/22056fdedd3f">Openresty笔记</a></p>
+<p>docker run -it -d –name haloSyncServer <br>-v &#x2F;opt&#x2F;haloSyncServer&#x2F;config:&#x2F;application&#x2F;config <br>-v &#x2F;opt&#x2F;haloSyncServer&#x2F;logs:&#x2F;application&#x2F;logs <br>–network host <br>-e JVM_OPTS&#x3D;”-Dhttps.proxyHost&#x3D;127.0.0.1 -Dhttps.proxyPort&#x3D;7890” <br>–restart&#x3D;no <br>linshen&#x2F;halo-sync-server</p>
+<p>curl -u admin:halo_DBT7Dc -X ‘POST’ <br>  ‘<a href="http://localhost:8080/v1alpha1/PersonalAccessToken">http://localhost:8080/v1alpha1/PersonalAccessToken</a>‘ <br>  -H ‘accept: application&#x2F;json’ <br>  -H ‘Content-Type: application&#x2F;json’ <br>  -d ‘{<br>  “spec”: {<br>    “name”: “My PAT”,<br>    “description”: “This is my first PAT.”,<br>    “expiresAt”: “2023-10-31T02:42:35.136Z”<br>    “roles”: [“”]<br>  }<br>}’</p>
+<p>curl -u “admin:halo_DBT7Dc” -H “Accept: application&#x2F;json” <a href="http://localhost:8080/api/v1alpha1/users">http://localhost:8080/api/v1alpha1/users</a></p>
+]]></content>
+  </entry>
+  <entry>
+    <title>Hexo+Halo博客同步方案</title>
+    <url>/posts/2325625073/</url>
+    <content><![CDATA[<span id="more"></span>
+
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a href="https://www.fewth.com/%E7%94%A8github-actions%E8%87%AA%E5%8A%A8%E5%8C%96%E5%B8%83%E7%BD%B2hexo%E5%8D%9A%E5%AE%A2-%E4%BB%8E%E7%A7%81%E6%9C%89%E4%BB%93%E5%BA%93%E5%88%B0%E5%85%AC%E5%85%B1%E4%BB%93%E5%BA%93/">用github actions自动化布署hexo博客-从私有仓库到公共仓库</a></p>
+<p><a href="https://github.com/linshenkx/haloSyncServer">haloSyncServer</a></p>
+<p><a href="https://linshenkx.github.io/my-blog-system-design/">个人博客系统设计(支持hexo和halo同步) </a></p>
+]]></content>
+  </entry>
+  <entry>
     <title>Hexo+Next博客上使用Waline评论系统</title>
     <url>/posts/2935919510/</url>
     <content><![CDATA[<p>为了增强博客的交互性，一个好用的评论系统是很有必要的（主要是自己想折腾一下），于是找到了<code>Waline</code>这个评论系统，下面记录下配置过程。</p>
