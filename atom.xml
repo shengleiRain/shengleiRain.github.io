@@ -6,7 +6,7 @@
   <link href="https://shengleirain.github.io/atom.xml" rel="self"/>
   
   <link href="https://shengleirain.github.io/"/>
-  <updated>2023-10-09T17:18:38.564Z</updated>
+  <updated>2023-10-10T09:00:00.082Z</updated>
   <id>https://shengleirain.github.io/</id>
   
   <author>
@@ -21,7 +21,7 @@
     <link href="https://shengleirain.github.io/posts/4126678771/"/>
     <id>https://shengleirain.github.io/posts/4126678771/</id>
     <published>2023-10-01T06:54:03.000Z</published>
-    <updated>2023-10-09T17:18:38.564Z</updated>
+    <updated>2023-10-10T09:00:00.082Z</updated>
     
     
       
@@ -35,6 +35,8 @@
       
     
     
+    
+    <category term="博客搭建" scheme="https://shengleirain.github.io/categories/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/"/>
     
     
   </entry>
@@ -44,7 +46,7 @@
     <link href="https://shengleirain.github.io/posts/2325625073/"/>
     <id>https://shengleirain.github.io/posts/2325625073/</id>
     <published>2023-10-01T05:54:03.000Z</published>
-    <updated>2023-10-09T17:18:38.564Z</updated>
+    <updated>2023-10-10T09:00:00.082Z</updated>
     
     
       
@@ -59,6 +61,12 @@
     
     
     
+    <category term="博客搭建" scheme="https://shengleirain.github.io/categories/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/"/>
+    
+    
+    <category term="halo" scheme="https://shengleirain.github.io/tags/halo/"/>
+    
+    <category term="hexo" scheme="https://shengleirain.github.io/tags/hexo/"/>
     
   </entry>
   
@@ -67,17 +75,21 @@
     <link href="https://shengleirain.github.io/posts/2935919510/"/>
     <id>https://shengleirain.github.io/posts/2935919510/</id>
     <published>2023-09-15T03:05:48.000Z</published>
-    <updated>2023-10-09T17:18:38.564Z</updated>
+    <updated>2023-10-10T09:00:00.082Z</updated>
     
     
     <summary type="html">&lt;p&gt;为了增强博客的交互性，一个好用的评论系统是很有必要的（主要是自己想折腾一下），于是找到了&lt;code&gt;Waline&lt;/code&gt;这个评论系统，下面记录下配置过程。&lt;/p&gt;</summary>
     
     
     
-    <category term="blog" scheme="https://shengleirain.github.io/categories/blog/"/>
+    <category term="博客搭建" scheme="https://shengleirain.github.io/categories/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/"/>
     
-    <category term="hexo" scheme="https://shengleirain.github.io/categories/blog/hexo/"/>
     
+    <category term="hexo" scheme="https://shengleirain.github.io/tags/hexo/"/>
+    
+    <category term="Next主题" scheme="https://shengleirain.github.io/tags/Next%E4%B8%BB%E9%A2%98/"/>
+    
+    <category term="waline评论系统" scheme="https://shengleirain.github.io/tags/waline%E8%AF%84%E8%AE%BA%E7%B3%BB%E7%BB%9F/"/>
     
   </entry>
   
@@ -86,7 +98,7 @@
     <link href="https://shengleirain.github.io/posts/932497391/"/>
     <id>https://shengleirain.github.io/posts/932497391/</id>
     <published>2023-09-13T13:18:35.000Z</published>
-    <updated>2023-10-09T17:18:38.564Z</updated>
+    <updated>2023-10-10T09:00:00.082Z</updated>
     
     
     <summary type="html">&lt;p&gt;使用markdown来记录博客，用vscode来作为书写的平台，需要了解一些markdown有关的插件和快捷键，来提升书写的舒适度。&lt;/p&gt;
@@ -100,14 +112,14 @@
     
     
     
-    <category term="tools" scheme="https://shengleirain.github.io/categories/tools/"/>
-    
-    <category term="vscode" scheme="https://shengleirain.github.io/categories/tools/vscode/"/>
+    <category term="效率&amp;工具" scheme="https://shengleirain.github.io/categories/%E6%95%88%E7%8E%87-%E5%B7%A5%E5%85%B7/"/>
     
     
     <category term="markdown" scheme="https://shengleirain.github.io/tags/markdown/"/>
     
     <category term="效率" scheme="https://shengleirain.github.io/tags/%E6%95%88%E7%8E%87/"/>
+    
+    <category term="vscode" scheme="https://shengleirain.github.io/tags/vscode/"/>
     
   </entry>
   
@@ -116,7 +128,7 @@
     <link href="https://shengleirain.github.io/posts/1772258976/"/>
     <id>https://shengleirain.github.io/posts/1772258976/</id>
     <published>2023-09-13T13:02:18.000Z</published>
-    <updated>2023-10-09T17:18:38.564Z</updated>
+    <updated>2023-10-10T09:00:00.082Z</updated>
     
     
     <summary type="html">&lt;h2 id=&quot;1-博客搭建背景&quot;&gt;&lt;a href=&quot;#1-博客搭建背景&quot; class=&quot;headerlink&quot; title=&quot;1. 博客搭建背景&quot;&gt;&lt;/a&gt;1. 博客搭建背景&lt;/h2&gt;&lt;p&gt;人活一世，总要记录点什么，于是就产生了搭建个人博客的想法。不过这种想法，老早之前就产生过，并且也实践过一段时间，用&lt;code&gt;jekyll+github pages&lt;/code&gt;搭设了个人博客，记录了寥寥可数的几篇文章。最近，购置了一台云服务器，所以又想重拾旧业，再次折腾下个人博客。这次采用&lt;code&gt;Hexo + github pages + 同步博客到Halo&lt;/code&gt;的方式，&lt;code&gt;github pages&lt;/code&gt;主要记录技术方面的笔记，同步到Halo博客上，Halo博客上多布置些其他内容。大概的安排如下：&lt;/p&gt;
@@ -128,10 +140,12 @@
     
     
     
-    <category term="blog" scheme="https://shengleirain.github.io/categories/blog/"/>
+    <category term="博客搭建" scheme="https://shengleirain.github.io/categories/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/"/>
     
-    <category term="hexo" scheme="https://shengleirain.github.io/categories/blog/hexo/"/>
     
+    <category term="hexo" scheme="https://shengleirain.github.io/tags/hexo/"/>
+    
+    <category term="Next主题" scheme="https://shengleirain.github.io/tags/Next%E4%B8%BB%E9%A2%98/"/>
     
   </entry>
   
@@ -140,7 +154,7 @@
     <link href="https://shengleirain.github.io/posts/1291917948/"/>
     <id>https://shengleirain.github.io/posts/1291917948/</id>
     <published>2023-09-13T07:46:38.000Z</published>
-    <updated>2023-10-09T17:18:38.564Z</updated>
+    <updated>2023-10-10T09:00:00.082Z</updated>
     
     
     <summary type="html">&lt;p&gt;进入&lt;code&gt;Settings&lt;/code&gt;，搜索&lt;code&gt;save&lt;/code&gt;, 如图&lt;/p&gt;
@@ -149,12 +163,12 @@
     
     
     
-    <category term="tools" scheme="https://shengleirain.github.io/categories/tools/"/>
-    
-    <category term="vscode" scheme="https://shengleirain.github.io/categories/tools/vscode/"/>
+    <category term="效率&amp;工具" scheme="https://shengleirain.github.io/categories/%E6%95%88%E7%8E%87-%E5%B7%A5%E5%85%B7/"/>
     
     
     <category term="效率" scheme="https://shengleirain.github.io/tags/%E6%95%88%E7%8E%87/"/>
+    
+    <category term="vscode" scheme="https://shengleirain.github.io/tags/vscode/"/>
     
   </entry>
   

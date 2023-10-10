@@ -1,17 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>给博客加上Https</title>
-    <url>/posts/4126678771/</url>
-    <content><![CDATA[<span id="more"></span>
-
-<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a href="https://github.com/acmesh-official/acme.sh/wiki/%E8%AF%B4%E6%98%8E">acme.sh使用说明</a><br><a href="https://github.com/acmesh-official/acme.sh/wiki/dnsapi">acme.sh dnsapi</a><br><a href="https://d.cellmean.com/p/22056fdedd3f">Openresty笔记</a></p>
-<p>docker run -it -d –name haloSyncServer <br>-v &#x2F;opt&#x2F;haloSyncServer&#x2F;config:&#x2F;application&#x2F;config <br>-v &#x2F;opt&#x2F;haloSyncServer&#x2F;logs:&#x2F;application&#x2F;logs <br>–network host <br>-e JVM_OPTS&#x3D;”-Dhttps.proxyHost&#x3D;127.0.0.1 -Dhttps.proxyPort&#x3D;7890” <br>–restart&#x3D;no <br>linshen&#x2F;halo-sync-server</p>
-<p>curl -u admin:halo_DBT7Dc -X ‘POST’ <br>  ‘<a href="http://localhost:8080/v1alpha1/PersonalAccessToken">http://localhost:8080/v1alpha1/PersonalAccessToken</a>‘ <br>  -H ‘accept: application&#x2F;json’ <br>  -H ‘Content-Type: application&#x2F;json’ <br>  -d ‘{<br>  “spec”: {<br>    “name”: “My PAT”,<br>    “description”: “This is my first PAT.”,<br>    “expiresAt”: “2023-10-31T02:42:35.136Z”<br>    “roles”: [“”]<br>  }<br>}’</p>
-<p>curl -u “admin:halo_DBT7Dc” -H “Accept: application&#x2F;json” <a href="http://localhost:8080/api/v1alpha1/users">http://localhost:8080/api/v1alpha1/users</a></p>
-]]></content>
-  </entry>
-  <entry>
     <title>Hexo+Halo博客同步方案</title>
     <url>/posts/2325625073/</url>
     <content><![CDATA[<span id="more"></span>
@@ -20,34 +9,13 @@
 <p><a href="https://github.com/linshenkx/haloSyncServer">haloSyncServer</a></p>
 <p><a href="https://linshenkx.github.io/my-blog-system-design/">个人博客系统设计(支持hexo和halo同步) </a></p>
 ]]></content>
-  </entry>
-  <entry>
-    <title>Hexo+Next博客上使用Waline评论系统</title>
-    <url>/posts/2935919510/</url>
-    <content><![CDATA[<p>为了增强博客的交互性，一个好用的评论系统是很有必要的（主要是自己想折腾一下），于是找到了<code>Waline</code>这个评论系统，下面记录下配置过程。</p>
-<span id="more"></span>
-
-<p><a href="https://theme-next.js.org/docs/third-party-services/comments">Next评论系统官方文档</a>，介绍了多种评论系统的开启方式，下面我介绍没有内置的评论系统。</p>
-<h2 id="Next集成waline评论前端页面"><a href="#Next集成waline评论前端页面" class="headerlink" title="Next集成waline评论前端页面"></a>Next集成waline评论前端页面</h2><p><a href="https://waline.js.org/guide/get-started/">waline的文档</a></p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">pnpm install @waline/hexo-next</span><br></pre></td></tr></table></figure>
-<p>然后，在blog或者Next的配置文件中，加上：</p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Waline Config File</span></span><br><span class="line"><span class="comment"># For more information:</span></span><br><span class="line"><span class="comment"># - https://waline.js.org</span></span><br><span class="line"><span class="comment"># - https://waline.js.org/reference/component.html</span></span><br><span class="line"><span class="attr">waline:</span></span><br><span class="line">  <span class="comment"># New! Whether enable this plugin</span></span><br><span class="line">  <span class="attr">enable:</span> <span class="literal">true</span></span><br><span class="line"></span><br><span class="line">  <span class="comment"># Waline server address url, you should set this to your own link</span></span><br><span class="line">  <span class="attr">serverURL:</span> <span class="string">xxx</span></span><br><span class="line"></span><br><span class="line">  <span class="comment"># Waline library CDN url, you can set this to your preferred CDN</span></span><br><span class="line">  <span class="attr">libUrl:</span> <span class="string">https://unpkg.com/@waline/client@v2/dist/waline.js</span></span><br><span class="line"></span><br><span class="line">  <span class="comment"># Waline CSS styles CDN url, you can set this to your preferred CDN</span></span><br><span class="line">  <span class="attr">cssUrl:</span> <span class="string">https://unpkg.com/@waline/client@v2/dist/waline.css</span></span><br><span class="line"></span><br><span class="line">  <span class="comment"># Custom locales</span></span><br><span class="line">  <span class="attr">locale:</span></span><br><span class="line">    <span class="attr">placeholder:</span> <span class="string">欢迎大家踊跃发言！</span> <span class="comment"># Comment box placeholder</span></span><br><span class="line"></span><br><span class="line">  <span class="comment"># If false, comment count will only be displayed in post page, not in home page</span></span><br><span class="line">  <span class="attr">commentCount:</span> <span class="literal">true</span></span><br><span class="line"></span><br><span class="line">  <span class="comment"># Pageviews count, <span class="doctag">Note:</span> You should not enable both `waline.pageview` and `leancloud_visitors`.</span></span><br><span class="line">  <span class="attr">pageview:</span> <span class="literal">false</span></span><br><span class="line"></span><br><span class="line">  <span class="comment"># Custom emoji</span></span><br><span class="line">  <span class="attr">emoji:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">https://unpkg.com/@waline/emojis@1.0.1/weibo</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">https://unpkg.com/@waline/emojis@1.0.1/alus</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">https://unpkg.com/@waline/emojis@1.0.1/bilibili</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">https://unpkg.com/@waline/emojis@1.0.1/qq</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">https://unpkg.com/@waline/emojis@1.0.1/tieba</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">https://unpkg.com/@waline/emojis@1.0.1/tw-emoji</span></span><br><span class="line"></span><br><span class="line">  <span class="comment"># Comment infomation, valid meta are nick, mail and link</span></span><br><span class="line">  <span class="attr">meta:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">nick</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">mail</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">link</span></span><br><span class="line"></span><br><span class="line">  <span class="comment"># Set required meta field, e.g.: [nick] | [nick, mail]</span></span><br><span class="line">  <span class="attr">requiredMeta:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">nick</span></span><br><span class="line"></span><br><span class="line">  <span class="comment"># Language, available values: en-US, zh-CN, zh-TW, pt-BR, ru-RU, jp-JP</span></span><br><span class="line">  <span class="attr">lang:</span> <span class="string">zh-CN</span></span><br><span class="line"></span><br><span class="line">  <span class="comment"># Word limit, no limit when setting to 0</span></span><br><span class="line">  <span class="comment"># wordLimit: 0</span></span><br><span class="line"></span><br><span class="line">  <span class="comment"># Whether enable login, can choose from &#x27;enable&#x27;, &#x27;disable&#x27; and &#x27;force&#x27;</span></span><br><span class="line">  <span class="attr">login:</span> <span class="string">enable</span></span><br><span class="line"></span><br><span class="line">  <span class="comment"># comment per page</span></span><br><span class="line">  <span class="attr">pageSize:</span> <span class="number">10</span></span><br><span class="line"></span><br><span class="line">  <span class="comment"># 文章增加表情互动功能  </span></span><br><span class="line">  <span class="attr">reaction:</span> <span class="literal">true</span></span><br><span class="line"></span><br><span class="line">  <span class="attr">copyright:</span> <span class="literal">true</span></span><br><span class="line"></span><br><span class="line">  <span class="string">imageUploader</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="适配Next暗黑模式："><a href="#适配Next暗黑模式：" class="headerlink" title="适配Next暗黑模式："></a>适配Next暗黑模式：</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">dark: &#x27;body.darkmode--activated&#x27;</span><br></pre></td></tr></table></figure>
-
-<h2 id="数据库服务支持"><a href="#数据库服务支持" class="headerlink" title="数据库服务支持"></a>数据库服务支持</h2><p>我是搭设在自己的云服务器上的，使用<code>docker</code>安装<code>mysql</code>（这一步，可以在网上搜索查找）。</p>
-<p>另外，其他数据库服务，可以参考<a href="https://waline.js.org/guide/database.html">多数据库服务支持</a>， 也可以参照<a href="https://waline.js.org/guide/get-started/">快速上手</a>LeanCloud等服务（反正我搭设之后，报各种错误）。</p>
-<h2 id="后端部署"><a href="#后端部署" class="headerlink" title="后端部署"></a>后端部署</h2><p>参考【部署】那一小节，选择自己想用的部署方式，不过，免费的云服务，我都没有搞成功，账号注册的时候就失败了，例如：Vercel部署。所以只能部署在自己的云服务器上了。</p>
-<p>拉取<code>lizheming/waline</code>镜像，最后运行镜像。</p>
-<p>使用docker compose运行方式，docker-compose.yaml如下（同时安装了mysql和waline，如果已经安装过mysql,则可以删掉mysql部分），更改一些参数可以了。</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">version: &quot;3.5&quot;</span><br><span class="line"></span><br><span class="line">services:</span><br><span class="line">  mysql:</span><br><span class="line">    image: mysql:5.7.26</span><br><span class="line">    container_name: waline-mysql</span><br><span class="line">    restart: always</span><br><span class="line">    privileged: false</span><br><span class="line">    environment:</span><br><span class="line">      TZ: &#x27;Asia/Shanghai&#x27;</span><br><span class="line">      MYSQL_ROOT_PASSWORD: yourPassword</span><br><span class="line">    ports:</span><br><span class="line">        - 3306:3306</span><br><span class="line">    networks:</span><br><span class="line">      waline-network:</span><br><span class="line">        ipv4_address: 172.23.0.3</span><br><span class="line">    volumes:</span><br><span class="line">      - &#x27;/usr/local/docker-volumes/mysql/conf:/etc/mysql/conf.d&#x27;</span><br><span class="line">      - &#x27;/usr/local/docker-volumes/mysql/data:/var/lib/mysql&#x27;</span><br><span class="line">      - &#x27;/usr/local/docker-volumes/mysql/log:/var/log/mysql&#x27;</span><br><span class="line">    command: --default-authentication-plugin=mysql_native_password</span><br><span class="line"></span><br><span class="line">  waline:</span><br><span class="line">    container_name: waline</span><br><span class="line">    image: lizheming/waline:latest</span><br><span class="line">    restart: always</span><br><span class="line">    privileged: false</span><br><span class="line">    depends_on:</span><br><span class="line">      - mysql</span><br><span class="line">    ports:</span><br><span class="line">      - 8360:8360</span><br><span class="line">    networks:</span><br><span class="line">      waline-network:</span><br><span class="line">        ipv4_address: 172.23.0.4</span><br><span class="line">    environment:</span><br><span class="line">      TZ: &quot;Asia/Shanghai&quot;</span><br><span class="line">      AKISMET_KEY: &quot;true&quot;</span><br><span class="line">      DISABLE_USERAGENT: &quot;false&quot;</span><br><span class="line">      SMTP_USER: &quot;xxx@qq.com&quot;</span><br><span class="line">      SMTP_PASS: &quot;xxx&quot;</span><br><span class="line">      SMTP_SECURE: &quot;false&quot;</span><br><span class="line">      SITE_NAME: &quot;Your site name&quot;</span><br><span class="line">      SECURE_DOMAINS: &quot;example.cn&quot;</span><br><span class="line">      AUTHOR_EMAIL: &quot;example@qq.com&quot;</span><br><span class="line">      SITE_URL: &quot;https://www.example.cn&quot;</span><br><span class="line">      MYSQL_HOST: 172.23.0.3</span><br><span class="line">      MYSQL_PORT: 3306</span><br><span class="line">      MYSQL_DB: waline</span><br><span class="line">      MYSQL_PREFIX: wl_</span><br><span class="line">      MYSQL_USER: root</span><br><span class="line">      MYSQL_PASSWORD: yourPassword</span><br><span class="line">    volumes:</span><br><span class="line">      - /usr/local/waline/data:/app/data</span><br><span class="line"></span><br><span class="line">networks:</span><br><span class="line">  waline-network:</span><br><span class="line">    name: waline-network</span><br><span class="line">    driver: bridge</span><br><span class="line">    ipam:</span><br><span class="line">      config:</span><br><span class="line">        - subnet: 172.89.0.0/24</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">networks:</span><br><span class="line">    1panel-network:</span><br><span class="line">        external: true</span><br></pre></td></tr></table></figure>
-
-<h2 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h2><p><a href="https://www.techgrow.cn/posts/ae18fb85.html">Hexo Next 主题使用 Waline 评论系统</a></p>
-]]></content>
       <categories>
-        <category>blog</category>
-        <category>hexo</category>
+        <category>博客搭建</category>
       </categories>
+      <tags>
+        <tag>halo</tag>
+        <tag>hexo</tag>
+      </tags>
   </entry>
   <entry>
     <title>Hexo+Next博客搭建记录</title>
@@ -171,8 +139,54 @@
 <h2 id="3-参考文档"><a href="#3-参考文档" class="headerlink" title="3. 参考文档"></a>3. 参考文档</h2><p><a href="https://www.mickeymiao.top/posts/f9b8ceb/">hexo NexT主题美化总结</a></p>
 ]]></content>
       <categories>
-        <category>blog</category>
-        <category>hexo</category>
+        <category>博客搭建</category>
+      </categories>
+      <tags>
+        <tag>hexo</tag>
+        <tag>Next主题</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Hexo+Next博客上使用Waline评论系统</title>
+    <url>/posts/2935919510/</url>
+    <content><![CDATA[<p>为了增强博客的交互性，一个好用的评论系统是很有必要的（主要是自己想折腾一下），于是找到了<code>Waline</code>这个评论系统，下面记录下配置过程。</p>
+<span id="more"></span>
+
+<p><a href="https://theme-next.js.org/docs/third-party-services/comments">Next评论系统官方文档</a>，介绍了多种评论系统的开启方式，下面我介绍没有内置的评论系统。</p>
+<h2 id="Next集成waline评论前端页面"><a href="#Next集成waline评论前端页面" class="headerlink" title="Next集成waline评论前端页面"></a>Next集成waline评论前端页面</h2><p><a href="https://waline.js.org/guide/get-started/">waline的文档</a></p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">pnpm install @waline/hexo-next</span><br></pre></td></tr></table></figure>
+<p>然后，在blog或者Next的配置文件中，加上：</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Waline Config File</span></span><br><span class="line"><span class="comment"># For more information:</span></span><br><span class="line"><span class="comment"># - https://waline.js.org</span></span><br><span class="line"><span class="comment"># - https://waline.js.org/reference/component.html</span></span><br><span class="line"><span class="attr">waline:</span></span><br><span class="line">  <span class="comment"># New! Whether enable this plugin</span></span><br><span class="line">  <span class="attr">enable:</span> <span class="literal">true</span></span><br><span class="line"></span><br><span class="line">  <span class="comment"># Waline server address url, you should set this to your own link</span></span><br><span class="line">  <span class="attr">serverURL:</span> <span class="string">xxx</span></span><br><span class="line"></span><br><span class="line">  <span class="comment"># Waline library CDN url, you can set this to your preferred CDN</span></span><br><span class="line">  <span class="attr">libUrl:</span> <span class="string">https://unpkg.com/@waline/client@v2/dist/waline.js</span></span><br><span class="line"></span><br><span class="line">  <span class="comment"># Waline CSS styles CDN url, you can set this to your preferred CDN</span></span><br><span class="line">  <span class="attr">cssUrl:</span> <span class="string">https://unpkg.com/@waline/client@v2/dist/waline.css</span></span><br><span class="line"></span><br><span class="line">  <span class="comment"># Custom locales</span></span><br><span class="line">  <span class="attr">locale:</span></span><br><span class="line">    <span class="attr">placeholder:</span> <span class="string">欢迎大家踊跃发言！</span> <span class="comment"># Comment box placeholder</span></span><br><span class="line"></span><br><span class="line">  <span class="comment"># If false, comment count will only be displayed in post page, not in home page</span></span><br><span class="line">  <span class="attr">commentCount:</span> <span class="literal">true</span></span><br><span class="line"></span><br><span class="line">  <span class="comment"># Pageviews count, <span class="doctag">Note:</span> You should not enable both `waline.pageview` and `leancloud_visitors`.</span></span><br><span class="line">  <span class="attr">pageview:</span> <span class="literal">false</span></span><br><span class="line"></span><br><span class="line">  <span class="comment"># Custom emoji</span></span><br><span class="line">  <span class="attr">emoji:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">https://unpkg.com/@waline/emojis@1.0.1/weibo</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">https://unpkg.com/@waline/emojis@1.0.1/alus</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">https://unpkg.com/@waline/emojis@1.0.1/bilibili</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">https://unpkg.com/@waline/emojis@1.0.1/qq</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">https://unpkg.com/@waline/emojis@1.0.1/tieba</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">https://unpkg.com/@waline/emojis@1.0.1/tw-emoji</span></span><br><span class="line"></span><br><span class="line">  <span class="comment"># Comment infomation, valid meta are nick, mail and link</span></span><br><span class="line">  <span class="attr">meta:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">nick</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">mail</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">link</span></span><br><span class="line"></span><br><span class="line">  <span class="comment"># Set required meta field, e.g.: [nick] | [nick, mail]</span></span><br><span class="line">  <span class="attr">requiredMeta:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">nick</span></span><br><span class="line"></span><br><span class="line">  <span class="comment"># Language, available values: en-US, zh-CN, zh-TW, pt-BR, ru-RU, jp-JP</span></span><br><span class="line">  <span class="attr">lang:</span> <span class="string">zh-CN</span></span><br><span class="line"></span><br><span class="line">  <span class="comment"># Word limit, no limit when setting to 0</span></span><br><span class="line">  <span class="comment"># wordLimit: 0</span></span><br><span class="line"></span><br><span class="line">  <span class="comment"># Whether enable login, can choose from &#x27;enable&#x27;, &#x27;disable&#x27; and &#x27;force&#x27;</span></span><br><span class="line">  <span class="attr">login:</span> <span class="string">enable</span></span><br><span class="line"></span><br><span class="line">  <span class="comment"># comment per page</span></span><br><span class="line">  <span class="attr">pageSize:</span> <span class="number">10</span></span><br><span class="line"></span><br><span class="line">  <span class="comment"># 文章增加表情互动功能  </span></span><br><span class="line">  <span class="attr">reaction:</span> <span class="literal">true</span></span><br><span class="line"></span><br><span class="line">  <span class="attr">copyright:</span> <span class="literal">true</span></span><br><span class="line"></span><br><span class="line">  <span class="string">imageUploader</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="适配Next暗黑模式："><a href="#适配Next暗黑模式：" class="headerlink" title="适配Next暗黑模式："></a>适配Next暗黑模式：</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">dark: &#x27;body.darkmode--activated&#x27;</span><br></pre></td></tr></table></figure>
+
+<h2 id="数据库服务支持"><a href="#数据库服务支持" class="headerlink" title="数据库服务支持"></a>数据库服务支持</h2><p>我是搭设在自己的云服务器上的，使用<code>docker</code>安装<code>mysql</code>（这一步，可以在网上搜索查找）。</p>
+<p>另外，其他数据库服务，可以参考<a href="https://waline.js.org/guide/database.html">多数据库服务支持</a>， 也可以参照<a href="https://waline.js.org/guide/get-started/">快速上手</a>LeanCloud等服务（反正我搭设之后，报各种错误）。</p>
+<h2 id="后端部署"><a href="#后端部署" class="headerlink" title="后端部署"></a>后端部署</h2><p>参考【部署】那一小节，选择自己想用的部署方式，不过，免费的云服务，我都没有搞成功，账号注册的时候就失败了，例如：Vercel部署。所以只能部署在自己的云服务器上了。</p>
+<p>拉取<code>lizheming/waline</code>镜像，最后运行镜像。</p>
+<p>使用docker compose运行方式，docker-compose.yaml如下（同时安装了mysql和waline，如果已经安装过mysql,则可以删掉mysql部分），更改一些参数可以了。</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">version: &quot;3.5&quot;</span><br><span class="line"></span><br><span class="line">services:</span><br><span class="line">  mysql:</span><br><span class="line">    image: mysql:5.7.26</span><br><span class="line">    container_name: waline-mysql</span><br><span class="line">    restart: always</span><br><span class="line">    privileged: false</span><br><span class="line">    environment:</span><br><span class="line">      TZ: &#x27;Asia/Shanghai&#x27;</span><br><span class="line">      MYSQL_ROOT_PASSWORD: yourPassword</span><br><span class="line">    ports:</span><br><span class="line">        - 3306:3306</span><br><span class="line">    networks:</span><br><span class="line">      waline-network:</span><br><span class="line">        ipv4_address: 172.23.0.3</span><br><span class="line">    volumes:</span><br><span class="line">      - &#x27;/usr/local/docker-volumes/mysql/conf:/etc/mysql/conf.d&#x27;</span><br><span class="line">      - &#x27;/usr/local/docker-volumes/mysql/data:/var/lib/mysql&#x27;</span><br><span class="line">      - &#x27;/usr/local/docker-volumes/mysql/log:/var/log/mysql&#x27;</span><br><span class="line">    command: --default-authentication-plugin=mysql_native_password</span><br><span class="line"></span><br><span class="line">  waline:</span><br><span class="line">    container_name: waline</span><br><span class="line">    image: lizheming/waline:latest</span><br><span class="line">    restart: always</span><br><span class="line">    privileged: false</span><br><span class="line">    depends_on:</span><br><span class="line">      - mysql</span><br><span class="line">    ports:</span><br><span class="line">      - 8360:8360</span><br><span class="line">    networks:</span><br><span class="line">      waline-network:</span><br><span class="line">        ipv4_address: 172.23.0.4</span><br><span class="line">    environment:</span><br><span class="line">      TZ: &quot;Asia/Shanghai&quot;</span><br><span class="line">      AKISMET_KEY: &quot;true&quot;</span><br><span class="line">      DISABLE_USERAGENT: &quot;false&quot;</span><br><span class="line">      SMTP_USER: &quot;xxx@qq.com&quot;</span><br><span class="line">      SMTP_PASS: &quot;xxx&quot;</span><br><span class="line">      SMTP_SECURE: &quot;false&quot;</span><br><span class="line">      SITE_NAME: &quot;Your site name&quot;</span><br><span class="line">      SECURE_DOMAINS: &quot;example.cn&quot;</span><br><span class="line">      AUTHOR_EMAIL: &quot;example@qq.com&quot;</span><br><span class="line">      SITE_URL: &quot;https://www.example.cn&quot;</span><br><span class="line">      MYSQL_HOST: 172.23.0.3</span><br><span class="line">      MYSQL_PORT: 3306</span><br><span class="line">      MYSQL_DB: waline</span><br><span class="line">      MYSQL_PREFIX: wl_</span><br><span class="line">      MYSQL_USER: root</span><br><span class="line">      MYSQL_PASSWORD: yourPassword</span><br><span class="line">    volumes:</span><br><span class="line">      - /usr/local/waline/data:/app/data</span><br><span class="line"></span><br><span class="line">networks:</span><br><span class="line">  waline-network:</span><br><span class="line">    name: waline-network</span><br><span class="line">    driver: bridge</span><br><span class="line">    ipam:</span><br><span class="line">      config:</span><br><span class="line">        - subnet: 172.89.0.0/24</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">networks:</span><br><span class="line">    1panel-network:</span><br><span class="line">        external: true</span><br></pre></td></tr></table></figure>
+
+<h2 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h2><p><a href="https://www.techgrow.cn/posts/ae18fb85.html">Hexo Next 主题使用 Waline 评论系统</a></p>
+]]></content>
+      <categories>
+        <category>博客搭建</category>
+      </categories>
+      <tags>
+        <tag>hexo</tag>
+        <tag>Next主题</tag>
+        <tag>waline评论系统</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>给博客加上Https</title>
+    <url>/posts/4126678771/</url>
+    <content><![CDATA[<span id="more"></span>
+
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a href="https://github.com/acmesh-official/acme.sh/wiki/%E8%AF%B4%E6%98%8E">acme.sh使用说明</a><br><a href="https://github.com/acmesh-official/acme.sh/wiki/dnsapi">acme.sh dnsapi</a><br><a href="https://d.cellmean.com/p/22056fdedd3f">Openresty笔记</a></p>
+]]></content>
+      <categories>
+        <category>博客搭建</category>
       </categories>
   </entry>
   <entry>
@@ -198,12 +212,12 @@
 <p><img src="http://img.yiyayobj.com/20230914005327.png" alt="20230914005327"></p>
 ]]></content>
       <categories>
-        <category>tools</category>
-        <category>vscode</category>
+        <category>效率&amp;工具</category>
       </categories>
       <tags>
         <tag>markdown</tag>
         <tag>效率</tag>
+        <tag>vscode</tag>
       </tags>
   </entry>
   <entry>
@@ -213,11 +227,11 @@
 <p><img src="http://img.yiyayobj.com/20230913155012.png" alt="20230913155012"></p>
 ]]></content>
       <categories>
-        <category>tools</category>
-        <category>vscode</category>
+        <category>效率&amp;工具</category>
       </categories>
       <tags>
         <tag>效率</tag>
+        <tag>vscode</tag>
       </tags>
   </entry>
 </search>
