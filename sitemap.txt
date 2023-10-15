@@ -1,3 +1,5 @@
+https://shengleirain.github.io/schedule/index.html
+https://shengleirain.github.io/tags/index.html
 https://shengleirain.github.io/posts/2325625073/
 https://shengleirain.github.io/posts/2935919510/
 https://shengleirain.github.io/posts/1772258976/
@@ -7,8 +9,6 @@ https://shengleirain.github.io/posts/1291917948/
 https://shengleirain.github.io/404/index.html
 https://shengleirain.github.io/about/index.html
 https://shengleirain.github.io/categories/index.html
-https://shengleirain.github.io/schedule/index.html
-https://shengleirain.github.io/tags/index.html
 https://shengleirain.github.io/
 https://shengleirain.github.io/tags/halo/
 https://shengleirain.github.io/tags/hexo/
