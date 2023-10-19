@@ -233,6 +233,11 @@
       <categories>
         <category>博客搭建</category>
       </categories>
+      <tags>
+        <tag>https</tag>
+        <tag>acme.sh</tag>
+        <tag>免费证书</tag>
+      </tags>
   </entry>
   <entry>
     <title>vscode markdown使用笔记</title>
