@@ -20,17 +20,22 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"shengleirain.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.18.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"fold":{"enable":true,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="参考资料acme.sh使用说明acme.sh dnsapiOpenresty笔记">
+    <meta name="description" content="一个搭载有Https的博客网站，会让人更加的有安全感（bushi），而且浏览器上也不会再出现标示不安全，而是一个令人信赖的安全锁。所以，在网上查找了如何让网站有安全锁呢。 经过一番查找，终于找到一个免费的证书申请方式。使用acme.sh来从 letsencrypt 生成免费的证书。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="给博客加上Https">
 <meta property="og:url" content="https://shengleirain.github.io/posts/4126678771/index.html">
 <meta property="og:site_name" content="咿呀哟笔记">
-<meta property="og:description" content="参考资料acme.sh使用说明acme.sh dnsapiOpenresty笔记">
+<meta property="og:description" content="一个搭载有Https的博客网站，会让人更加的有安全感（bushi），而且浏览器上也不会再出现标示不安全，而是一个令人信赖的安全锁。所以，在网上查找了如何让网站有安全锁呢。 经过一番查找，终于找到一个免费的证书申请方式。使用acme.sh来从 letsencrypt 生成免费的证书。">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://img.yiyayobj.com/20231019225316.png">
+<meta property="og:image" content="https://img.yiyayobj.com/20231019231039.png">
+<meta property="og:image" content="https://img.yiyayobj.com/20231019231121.png">
+<meta property="og:image" content="https://img.yiyayobj.com/20231019231256.png">
 <meta property="article:published_time" content="2023-10-01T06:54:03.000Z">
-<meta property="article:modified_time" content="2023-10-18T14:19:00.440Z">
+<meta property="article:modified_time" content="2023-10-19T15:14:35.170Z">
 <meta property="article:author" content="Rain">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://img.yiyayobj.com/20231019225316.png">
 
 
 <link rel="canonical" href="https://shengleirain.github.io/posts/4126678771/">
@@ -141,7 +146,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="nav-text">参考资料</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E5%AE%89%E8%A3%85acme-sh"><span class="nav-text">1. 安装acme.sh</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E4%BD%BF%E7%94%A8acme-sh%E7%94%9F%E6%88%90%E5%85%8D%E8%B4%B9%E7%9A%84%E8%AF%81%E4%B9%A6"><span class="nav-text">2. 使用acme.sh生成免费的证书</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E4%BD%BF%E7%94%A8%E7%94%9F%E6%88%90%E7%9A%84%E8%AF%81%E4%B9%A6"><span class="nav-text">3. 使用生成的证书</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-apache%E7%A4%BA%E4%BE%8B"><span class="nav-text">3.1. apache示例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-nginx%E7%A4%BA%E4%BE%8B"><span class="nav-text">3.2. nginx示例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-%E6%88%91%E6%90%AD%E8%AE%BE%E5%9C%A8openresty%E4%B8%8A%E7%9A%84%E5%8D%9A%E5%AE%A2%E7%BD%91%E7%AB%99"><span class="nav-text">3.3. 我搭设在openresty上的博客网站</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="nav-text">4. 参考资料</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -244,7 +249,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-10-18 22:19:00" itemprop="dateModified" datetime="2023-10-18T22:19:00+08:00">2023-10-18</time>
+      <time title="修改时间：2023-10-19 23:14:35" itemprop="dateModified" datetime="2023-10-19T23:14:35+08:00">2023-10-19</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -284,14 +289,14 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>15</span>
+      <span>707</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>1 分钟</span>
+      <span>3 分钟</span>
     </span>
 </div>
 
@@ -301,9 +306,38 @@
     
     
     
-    <div class="post-body" itemprop="articleBody"><span id="more"></span>
+    <div class="post-body" itemprop="articleBody"><p>一个搭载有Https的博客网站，会让人更加的有安全感（bushi），而且浏览器上也不会再出现标示不安全，而是一个令人信赖的安全锁。所以，在网上查找了如何让网站有安全锁呢。</p>
+<p>经过一番查找，终于找到一个免费的证书申请方式。使用<code>acme.sh</code>来从 <code>letsencrypt</code> 生成免费的证书。</p>
+<span id="more"></span>
 
-<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a target="_blank" rel="noopener" href="https://github.com/acmesh-official/acme.sh/wiki/%E8%AF%B4%E6%98%8E">acme.sh使用说明</a><br><a target="_blank" rel="noopener" href="https://github.com/acmesh-official/acme.sh/wiki/dnsapi">acme.sh dnsapi</a><br><a target="_blank" rel="noopener" href="https://d.cellmean.com/p/22056fdedd3f">Openresty笔记</a></p>
+<h2 id="1-安装acme-sh"><a href="#1-安装acme-sh" class="headerlink" title="1. 安装acme.sh"></a>1. 安装acme.sh</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl https://get.acme.sh | sh -s email=my@example.com</span><br></pre></td></tr></table></figure>
+
+<p>该安装命令，实现了以下几步</p>
+<ul>
+<li>把 acme.sh 安装到你的 home 目录下，生成了<code>.acme.sh</code>目录</li>
+<li>自动为你创建 cronjob, 每天 0:00 点自动检测所有的证书, 如果快过期了, 需要更新, 则会自动更新证书.</li>
+</ul>
+<h2 id="2-使用acme-sh生成免费的证书"><a href="#2-使用acme-sh生成免费的证书" class="headerlink" title="2. 使用acme.sh生成免费的证书"></a>2. 使用acme.sh生成免费的证书</h2><p>我是使用DNS验证的方式来验证域名的所有权，dns 方式的真正强大之处在于可以使用域名解析商提供的 api 自动添加 txt 记录完成验证。因为我的域名解析商是华为云，因此，我参照 <a target="_blank" rel="noopener" href="https://github.com/acmesh-official/acme.sh/wiki/dnsapi2#dns_huaweicloud">123. Use HuaweiCloud API</a>。但是华为云的用户验证方式，是挺坑的，弄了很久才搞明白。</p>
+<p>在<code>/etc/profile</code>文件中添加</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">export HUAWEICLOUD_Username=&quot;username&quot;</span><br><span class="line">export HUAWEICLOUD_Password=&quot;password&quot;</span><br><span class="line">export HUAWEICLOUD_DomainName=&quot;domain_name&quot;</span><br><span class="line">export HUAWEICLOUD_ProjectID=&quot;project_id&quot;</span><br></pre></td></tr></table></figure>
+<p>根据华为云的文档，<a target="_blank" rel="noopener" href="https://support.huaweicloud.com/api-iam/iam_17_0002.html#iam_17_0002__section13960118204914%E3%80%82%E5%9C%A8%E4%B8%BB%E8%B4%A6%E5%8F%B7%E4%B8%8A%E5%88%9B%E5%BB%BA%E5%AD%90%E8%B4%A6%E5%8F%B7%E5%90%8E%EF%BC%8C%E6%A0%B9%E6%8D%AE%E8%BF%99%E5%BC%A0%E5%9B%BE%E6%9D%A5%E5%A1%AB%E5%86%99%E4%B8%8A%E9%9D%A2%E7%9A%84%E4%BF%A1%E6%81%AF%E3%80%82">https://support.huaweicloud.com/api-iam/iam_17_0002.html#iam_17_0002__section13960118204914。在主账号上创建子账号后，根据这张图来填写上面的信息。</a></p>
+<p><img src="https://img.yiyayobj.com/20231019225316.png" alt="20231019225316"></p>
+<p>然后运行以下命令，可以给我的域名yiyayobj.com生成泛域名证书。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">acme.sh --issue --dns dns_huaweicloud -d yiyayobj.com -d *.yiyayobj.com</span><br></pre></td></tr></table></figure>
+<p>会在<code>.acme.sh/</code>中生成<code>yiyayobj.com_ecc</code>目录</p>
+<p><img src="https://img.yiyayobj.com/20231019231039.png" alt="20231019231039"></p>
+<h2 id="3-使用生成的证书"><a href="#3-使用生成的证书" class="headerlink" title="3. 使用生成的证书"></a>3. 使用生成的证书</h2><p>前面证书生成以后, 接下来需要把证书 copy 到真正需要用它的地方.</p>
+<p>注意, 默认生成的证书都放在安装目录下: <code>~/.acme.sh/</code>, 请不要直接使用此目录下的文件, 例如: 不要直接让 nginx&#x2F;apache 的配置文件使用这下面的文件. 这里面的文件都是内部使用, 而且目录结构可能会变化.</p>
+<p>正确的使用方法是使用 <code>--install-cert</code> 命令,并指定目标位置, 然后证书文件会被copy到相应的位置, 例如:</p>
+<h3 id="3-1-apache示例"><a href="#3-1-apache示例" class="headerlink" title="3.1. apache示例"></a>3.1. apache示例</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">acme.sh --install-cert -d example.com \</span><br><span class="line">--cert-file      /path/to/certfile/in/apache/cert.pem  \</span><br><span class="line">--key-file       /path/to/keyfile/in/apache/key.pem  \</span><br><span class="line">--fullchain-file /path/to/fullchain/certfile/apache/fullchain.pem \</span><br><span class="line">--reloadcmd     &quot;service apache2 force-reload&quot;</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-2-nginx示例"><a href="#3-2-nginx示例" class="headerlink" title="3.2. nginx示例"></a>3.2. nginx示例</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">acme.sh --install-cert -d example.com \</span><br><span class="line">--key-file       /path/to/keyfile/in/nginx/key.pem  \</span><br><span class="line">--fullchain-file /path/to/fullchain/nginx/cert.pem \</span><br><span class="line">--reloadcmd     &quot;service nginx force-reload&quot;</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-3-我搭设在openresty上的博客网站"><a href="#3-3-我搭设在openresty上的博客网站" class="headerlink" title="3.3. 我搭设在openresty上的博客网站"></a>3.3. 我搭设在openresty上的博客网站</h3><p>由于我的云平台是使用了1Panel进行管理，博客网站又是搭设在Openresty上的。因此进入图形界面，手动导入证书</p>
+<p><img src="https://img.yiyayobj.com/20231019231121.png" alt="20231019231121"></p>
+<p>然后会在网站目录<code>ssl</code>下面生成两个文件</p>
+<p><img src="https://img.yiyayobj.com/20231019231256.png" alt="20231019231256"></p>
+<h2 id="4-参考资料"><a href="#4-参考资料" class="headerlink" title="4. 参考资料"></a>4. 参考资料</h2><p><a target="_blank" rel="noopener" href="https://github.com/acmesh-official/acme.sh/wiki/%E8%AF%B4%E6%98%8E">acme.sh使用说明</a><br><a target="_blank" rel="noopener" href="https://github.com/acmesh-official/acme.sh/wiki/dnsapi">acme.sh dnsapi</a><br><a target="_blank" rel="noopener" href="https://d.cellmean.com/p/22056fdedd3f">Openresty笔记</a></p>
 
     </div>
 
@@ -371,14 +405,14 @@
       <i class="fa fa-chart-line"></i>
     </span>
       <span>站点总字数：</span>
-    <span title="站点总字数">5k</span>
+    <span title="站点总字数">6k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span>站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">19 分钟</span>
+    <span title="站点阅读时长">21 分钟</span>
   </span>
 </div>
 <div class="busuanzi-count">
