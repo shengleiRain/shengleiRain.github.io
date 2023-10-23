@@ -1,3 +1,4 @@
+https://shengleirain.github.io/posts/3774024798/
 https://shengleirain.github.io/posts/2325625073/
 https://shengleirain.github.io/posts/2935919510/
 https://shengleirain.github.io/posts/1772258976/
@@ -10,6 +11,9 @@ https://shengleirain.github.io/categories/index.html
 https://shengleirain.github.io/schedule/index.html
 https://shengleirain.github.io/tags/index.html
 https://shengleirain.github.io/
+https://shengleirain.github.io/tags/%E5%8D%8E%E4%B8%BA%E4%BA%91%E5%9F%9F%E5%90%8D%E8%A7%A3%E6%9E%90/
+https://shengleirain.github.io/tags/nas/
+https://shengleirain.github.io/tags/%E5%AE%B6%E7%94%A8%E5%85%AC%E6%9C%89ip/
 https://shengleirain.github.io/tags/halo/
 https://shengleirain.github.io/tags/hexo/
 https://shengleirain.github.io/tags/waline%E8%AF%84%E8%AE%BA%E7%B3%BB%E7%BB%9F/
@@ -20,5 +24,6 @@ https://shengleirain.github.io/tags/%E5%85%8D%E8%B4%B9%E8%AF%81%E4%B9%A6/
 https://shengleirain.github.io/tags/markdown/
 https://shengleirain.github.io/tags/%E6%95%88%E7%8E%87/
 https://shengleirain.github.io/tags/vscode/
+https://shengleirain.github.io/categories/nas%E6%8A%98%E8%85%BE/
 https://shengleirain.github.io/categories/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/
 https://shengleirain.github.io/categories/%E6%95%88%E7%8E%87-%E5%B7%A5%E5%85%B7/
