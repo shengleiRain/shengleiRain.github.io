@@ -309,4 +309,17 @@
         <tag>vscode</tag>
       </tags>
   </entry>
+  <entry>
+    <title>用vscode 开发uni-app项目</title>
+    <url>/posts/377987584/</url>
+    <content><![CDATA[<p>使用vscode来开发uni-app项目，需要使用的一些插件，以及一些配置。</p>
+]]></content>
+      <categories>
+        <category>效率&amp;工具</category>
+      </categories>
+      <tags>
+        <tag>vscode</tag>
+        <tag>uni-app</tag>
+      </tags>
+  </entry>
 </search>
